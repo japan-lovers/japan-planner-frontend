@@ -1,3 +1,3 @@
 function TripDetails() {}
 
-export default Trip;
+export default TripDetails;
