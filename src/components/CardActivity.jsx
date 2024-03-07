@@ -1,7 +1,7 @@
 import React from 'react';
 
-function CardActivity() {
-  return <div>CardActivity</div>;
+function CardActivity({ name }) {
+  return <div>{name}</div>;
 }
 
 export default CardActivity;
