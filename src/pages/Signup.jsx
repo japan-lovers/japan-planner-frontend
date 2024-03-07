@@ -1,13 +1,20 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import authService from "../services/auth.service";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import authService from '../services/auth.service';
+import {
+  Card,
+  Input,
+  Checkbox,
+  Button,
+  Typography,
+} from '@material-tailwind/react';
 
-const API_URL = "http://localhost:3000";
+const API_URL = 'http://localhost:3000';
 
 function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
@@ -27,7 +34,7 @@ function Signup() {
     authService
       .signup(requestBody)
       .then((response) => {
-        navigate("/login");
+        navigate('/login');
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
@@ -36,44 +43,111 @@ function Signup() {
   };
 
   return (
-    <div className="SignupPage">
-      <h1>Sign Up</h1>
+    // <div className="SignupPage">
+    //   <h1>Sign Up</h1>
 
-      <form onSubmit={handleSignupSubmit}>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email}
-          onChange={handleEmail}
-        />
+    //   <form onSubmit={handleSignupSubmit}>
+    //     <label>Email:</label>
+    //     <input
+    //       type="email"
+    //       name="email"
+    //       placeholder="Email"
+    //       value={email}
+    //       onChange={handleEmail}
+    //     />
 
-        <label>Username:</label>
-        <input
-          type="text"
-          name="email"
-          placeholder="Username"
-          value={username}
-          onChange={handleUsername}
-        />
+    //     <label>Username:</label>
+    //     <input
+    //       type="text"
+    //       name="email"
+    //       placeholder="Username"
+    //       value={username}
+    //       onChange={handleUsername}
+    //     />
 
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password}
-          onChange={handlePassword}
-        />
+    //     <label>Password:</label>
+    //     <input
+    //       type="password"
+    //       name="password"
+    //       placeholder="Password"
+    //       value={password}
+    //       onChange={handlePassword}
+    //     />
 
-        <button type="submit">Sign Up</button>
-      </form>
+    //     <button type="submit">Sign Up</button>
+    //   </form>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+    //   {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
+    //   <p>Already have account?</p>
+    //   <Link to={"/login"}> Login</Link>
+    // </div>
+    <div className="flex justify-center items-center mt-20">
+      <Card color="transparent" shadow={false}>
+        <Typography variant="h4" color="blue-gray">
+          Sign Up
+        </Typography>
+        <Typography color="gray" className="mt-1 font-normal">
+          Nice to meet you! Enter your details to register.
+        </Typography>
+        <form
+          className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+          onSubmit={handleSignupSubmit}
+        >
+          <div className="mb-1 flex flex-col gap-6">
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+              Your Username
+            </Typography>
+            <Input
+              size="lg"
+              placeholder="name@mail.com"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: 'before:content-none after:content-none',
+              }}
+              value={username}
+              onChange={handleUsername}
+            />
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+              Your Email
+            </Typography>
+            <Input
+              size="lg"
+              placeholder="name@mail.com"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: 'before:content-none after:content-none',
+              }}
+              value={email}
+              onChange={handleEmail}
+            />
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+              Password
+            </Typography>
+            <Input
+              type="password"
+              size="lg"
+              placeholder="********"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: 'before:content-none after:content-none',
+              }}
+              value={password}
+              onChange={handlePassword}
+            />
+          </div>
+
+          <Button type="submit" className="mt-6" fullWidth>
+            sign up
+          </Button>
+          <Typography color="gray" className="mt-4 text-center font-normal">
+            Already have an account?{' '}
+            <Link to="/login">
+              <span className="font-medium text-gray-900">Sign In</span>
+            </Link>
+          </Typography>
+        </form>
+      </Card>
     </div>
   );
 }
