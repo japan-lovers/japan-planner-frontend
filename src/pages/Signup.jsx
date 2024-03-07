@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import authService from '../services/auth.service';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import authService from "../services/auth.service";
 import {
   Card,
   Input,
   Checkbox,
   Button,
   Typography,
-} from '@material-tailwind/react';
+} from "@material-tailwind/react";
 
-const API_URL = 'http://localhost:3000';
+const API_URL = "http://localhost:3000";
 
 function Signup() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ function Signup() {
     authService
       .signup(requestBody)
       .then((response) => {
-        navigate('/login');
+        navigate("/login");
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
@@ -103,7 +103,7 @@ function Signup() {
               placeholder="name@mail.com"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
-                className: 'before:content-none after:content-none',
+                className: "before:content-none after:content-none",
               }}
               value={username}
               onChange={handleUsername}
@@ -116,7 +116,7 @@ function Signup() {
               placeholder="name@mail.com"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
-                className: 'before:content-none after:content-none',
+                className: "before:content-none after:content-none",
               }}
               value={email}
               onChange={handleEmail}
@@ -130,7 +130,7 @@ function Signup() {
               placeholder="********"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
-                className: 'before:content-none after:content-none',
+                className: "before:content-none after:content-none",
               }}
               value={password}
               onChange={handlePassword}
@@ -141,7 +141,7 @@ function Signup() {
             sign up
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Link to="/login">
               <span className="font-medium text-gray-900">Sign In</span>
             </Link>
