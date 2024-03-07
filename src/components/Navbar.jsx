@@ -53,11 +53,6 @@ function Navbar() {
         </Link>
         <div className="navbar-start hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            <Link to="/">
-              <li>
-                <span>Home</span>
-              </li>
-            </Link>
             <Link to="/activities">
               <li>
                 <span>All activities</span>
@@ -75,14 +70,8 @@ function Navbar() {
       <div className="navbar-end">
         <Link to="/login">
           <span className="btn ml-4 mr-2">
-            <i className="fab fa-github text-lg" />
+            <i class="fa-solid fa-user"></i>
             Login
-          </span>
-        </Link>
-        <Link to="/signup">
-          <span className="btn ml-0 mr-4">
-            <i className="fab fa-github text-lg" />
-            Sign up
           </span>
         </Link>
         {/* ======= AVATAR THAT SHOWS SHEN LOGGED IN  */}
