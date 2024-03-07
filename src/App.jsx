@@ -1,18 +1,21 @@
-import { Routes, Route } from "react-router-dom";
+import './App.css';
+import { Routes, Route } from 'react-router-dom';
 
-import Homepage from "./pages/Homepage";
-import About from "./pages/About";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import UserProfile from "./pages/UserProfile";
-import AllTrips from "./pages/AllTrips";
-import TripDetails from "./pages/TripDetails";
-import AllActivities from "./pages/AllActivities";
-import ActivityDetails from "./pages/ActivityDetails";
+import Homepage from './pages/Homepage';
+import About from './pages/About';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import UserProfile from './pages/UserProfile';
+import AllTrips from './pages/AllTrips';
+import TripDetails from './pages/TripDetails';
+import AllActivities from './pages/AllActivities';
+import ActivityDetails from './pages/ActivityDetails';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <div>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/about" element={<About />} />
