@@ -1,16 +1,17 @@
-import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import ReactDOM from "react-dom";
 
-import Homepage from './pages/Homepage';
-import About from './pages/About';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import UserProfile from './pages/UserProfile';
-import AllTrips from './pages/AllTrips';
-import TripDetails from './pages/TripDetails';
-import AllActivities from './pages/AllActivities';
-import ActivityDetails from './pages/ActivityDetails';
-import Navbar from './components/Navbar';
+import Homepage from "./pages/Homepage";
+import About from "./pages/About";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import UserProfile from "./pages/UserProfile";
+import AllTrips from "./pages/AllTrips";
+import TripDetails from "./pages/TripDetails";
+import AllActivities from "./pages/AllActivities";
+import ActivityDetails from "./pages/ActivityDetails";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (

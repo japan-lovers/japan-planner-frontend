@@ -36,7 +36,7 @@ function Login() {
         setErrorMessage(errorDescription);
       });
   };
-  useNavigate;
+
   return (
     <div className="flex flex-col">
       <h1>Login</h1>
