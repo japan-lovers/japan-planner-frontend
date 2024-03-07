@@ -21,7 +21,7 @@ function AllActivities() {
 
   return (
     <div>
-      {activities.length === 0 ? (
+      {activities.length == 0 ? (
         <div>Loading...</div>
       ) : (
         activities.map((activity) => (

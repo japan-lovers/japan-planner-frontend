@@ -1,7 +1,7 @@
 import React from 'react';
 
-function CardTrips() {
-  return <div>CardTrips</div>;
+function CardTrips({ name }) {
+  return <div>{name}</div>;
 }
 
 export default CardTrips;
