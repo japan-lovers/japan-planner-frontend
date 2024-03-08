@@ -12,6 +12,7 @@ function UserProfilePage() {
     userService
       .getUser(id)
       .then((response) => {
+        console.log(response.data);
         setUser(response.data);
       })
       .catch((error) => console.log(error));
@@ -22,8 +23,12 @@ function UserProfilePage() {
   }, []);
 
   return (
-    <div>
-      {user === null ? <div>Loading...</div> : <UserProfile user={user} />}
+    <div className="flex justify-center">
+      {user === null ? (
+        <span className="loading loading-ring loading-lg mt-48"></span>
+      ) : (
+        <UserProfile user={user} id={id} />
+      )}
     </div>
   );
 }
