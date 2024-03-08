@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import moment from "moment";
 import "react-dates/initialize";
 import { DateRangePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
 import tripsService from "../services/trip.service";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 
 function TripForm() {
   const [destinations, setDestinations] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [focusedInput, setFocusedInput] = useState("startDate");
+
+  const { isLoggedIn, user } = useContext(AuthContext);
+  // const userId = user._id;
 
   const navigate = useNavigate();
 
@@ -23,17 +27,24 @@ function TripForm() {
 
   const handleCreateTrip = (e) => {
     e.preventDefault();
-    const requestBody = { destinations, startDate, endDate };
 
-    tripsService
-      .createTrip(requestBody)
-      .then((response) => {
-        navigate(`/trips/${response.data._id}`);
-      })
-      .catch((error) => {
-        const errorDescription = error.response.data.message;
-        setErrorMessage(errorDescription);
-      });
+    if (isLoggedIn) {
+      const userId = user._id;
+      const requestBody = { destinations, startDate, endDate, userId };
+
+      tripsService
+        .createTrip(requestBody)
+        .then((response) => {
+          console.log(response);
+          navigate(`/trips/${response.data._id}`);
+        })
+        .catch((error) => {
+          const errorDescription = error.response.data.message;
+          setErrorMessage(errorDescription);
+        });
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
