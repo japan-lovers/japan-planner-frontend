@@ -43,45 +43,6 @@ function Signup() {
   };
 
   return (
-    // <div className="SignupPage">
-    //   <h1>Sign Up</h1>
-
-    //   <form onSubmit={handleSignupSubmit}>
-    //     <label>Email:</label>
-    //     <input
-    //       type="email"
-    //       name="email"
-    //       placeholder="Email"
-    //       value={email}
-    //       onChange={handleEmail}
-    //     />
-
-    //     <label>Username:</label>
-    //     <input
-    //       type="text"
-    //       name="email"
-    //       placeholder="Username"
-    //       value={username}
-    //       onChange={handleUsername}
-    //     />
-
-    //     <label>Password:</label>
-    //     <input
-    //       type="password"
-    //       name="password"
-    //       placeholder="Password"
-    //       value={password}
-    //       onChange={handlePassword}
-    //     />
-
-    //     <button type="submit">Sign Up</button>
-    //   </form>
-
-    //   {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-    //   <p>Already have account?</p>
-    //   <Link to={"/login"}> Login</Link>
-    // </div>
     <div className="flex justify-center items-center mt-20">
       <Card color="transparent" shadow={false}>
         <Typography variant="h4" color="blue-gray">
