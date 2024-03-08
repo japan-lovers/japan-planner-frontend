@@ -140,6 +140,7 @@ function Signup() {
           <Button type="submit" className="mt-6" fullWidth>
             sign up
           </Button>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <Typography color="gray" className="mt-4 text-center font-normal">
             Already have an account?{" "}
             <Link to="/login">

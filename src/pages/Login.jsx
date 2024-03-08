@@ -122,6 +122,8 @@ function Login() {
           <Button type="submit" className="mt-6" fullWidth>
             Log In
           </Button>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+
           <Typography color="gray" className="mt-4 text-center font-normal">
             Don't have an account yet ?{" "}
             <Link to="/signup">
