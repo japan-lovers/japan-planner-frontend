@@ -6,7 +6,7 @@ function Navbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 max-w-7xl">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -81,12 +81,22 @@ function Navbar() {
           </Link>
         )}
         {isLoggedIn && (
-          <button className="btn btn-outline mr-4" onClick={logOutUser}>
-            Logout
-          </button>
+          <div className="flex items-center">
+            <button className="btn btn-outline mr-4" onClick={logOutUser}>
+              Logout
+            </button>
+            <Link to={`/user/${user._id}`}>
+              <img
+                className="w-10 rounded-full avatar"
+                alt="Tailwind CSS Navbar component"
+                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+              />
+            </Link>
+          </div>
         )}
         {/* ======= AVATAR THAT SHOWS SHEN LOGGED IN  */}
-        <div className="dropdown dropdown-end mr-2">
+
+        {/* <div className="dropdown dropdown-end mr-2">
           <div
             tabIndex={0}
             role="button"
@@ -116,7 +126,7 @@ function Navbar() {
               <a>Logout</a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );
