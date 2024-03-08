@@ -8,6 +8,7 @@ module.exports = withMT({
     extend: {
       spacing: {
         tripform: "900px",
+        minus: "-30px",
       },
     },
   },

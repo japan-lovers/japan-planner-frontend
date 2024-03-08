@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import activitiesService from '../services/activities.service';
-import CardActivity from '../components/CardActivity';
+import { useState, useEffect } from "react";
+import activitiesService from "../services/activities.service";
+import CardActivity from "../components/CardActivity";
 
 function AllActivities() {
   const [activities, setActivities] = useState([]);
@@ -29,10 +29,7 @@ function AllActivities() {
           <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
             <div className="mt-2 flex items-center text-sm text-gray-500">
               <span className="ml-3 hidden sm:block">
-                <button
-                  type="button"
-                  className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                >
+                <button type="button" className="btn btn-outline btn-sm">
                   View
                 </button>
               </span>

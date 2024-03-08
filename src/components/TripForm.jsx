@@ -37,7 +37,7 @@ function TripForm() {
   };
 
   return (
-    <div className="rounded-full w-tripform bg-zinc-200">
+    <div className="rounded-full w-tripform bg-neutral-200">
       <form onSubmit={handleCreateTrip} className="flex justify-evenly p-2">
         <input
           type="text"

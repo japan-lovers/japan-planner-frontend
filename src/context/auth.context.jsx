@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import authService from "../services/auth.service";
+import { useNavigate } from "react-router-dom";
 const API_URL = "http://localhost:3000";
 
 const AuthContext = React.createContext();
@@ -11,6 +12,7 @@ function AuthProviderWrapper(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
 
+  const navigate = useNavigate();
   /* 
     Functions for handling the authentication status (isLoggedIn, isLoading, user)
     will be added here later in the next step
@@ -62,6 +64,7 @@ function AuthProviderWrapper(props) {
     removeToken();
     // and update the state variables
     authenticateUser();
+    navigate("/");
   };
 
   useEffect(() => {

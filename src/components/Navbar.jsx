@@ -1,8 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/auth.context";
 
 function Navbar() {
+  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
+
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 max-w-7xl">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -25,24 +29,24 @@ function Navbar() {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <Link to="/">
+            <NavLink to="/">
               <li>
                 <span>Home</span>
               </li>
-            </Link>
-            <Link to="/activities">
+            </NavLink>
+            <NavLink to="/activities">
               <li>
                 <span>All activities</span>
               </li>
-            </Link>
-            <Link to="/trips">
+            </NavLink>
+            <NavLink to="/trips">
               <li>
                 <span>Explore trips</span>
               </li>
-            </Link>
+            </NavLink>
           </ul>
         </div>
-        <Link to="/">
+        <NavLink to="/">
           <span className="btn btn-ghost text-l">
             {/* <img
               className="h-10"
@@ -50,32 +54,49 @@ function Navbar() {
             /> */}
             JAPAN TRAVEL
           </span>
-        </Link>
+        </NavLink>
         <div className="navbar-start hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            <Link to="/activities">
+            <NavLink to="/activities">
               <li>
                 <span>All activities</span>
               </li>
-            </Link>
-            <Link to="/trips">
+            </NavLink>
+            <NavLink to="/trips">
               <li>
                 <span>Explore trips</span>
               </li>
-            </Link>
+            </NavLink>
           </ul>
         </div>
       </div>
 
       <div className="navbar-end">
-        <Link to="/login">
-          <span className="btn ml-4 mr-2">
-            <i class="fa-solid fa-user"></i>
-            Login
-          </span>
+        <Link to="/">
+          <button className="btn btn-outline mr-4">Plan trip</button>
         </Link>
+        {!isLoggedIn && (
+          <Link to="/login">
+            <button className="btn btn-outline mr-4">Login</button>
+          </Link>
+        )}
+        {isLoggedIn && (
+          <div className="flex items-center">
+            <button className="btn btn-outline mr-4" onClick={logOutUser}>
+              Logout
+            </button>
+            <Link to={`/user/${user._id}`}>
+              <img
+                className="w-10 rounded-full avatar"
+                alt="Tailwind CSS Navbar component"
+                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+              />
+            </Link>
+          </div>
+        )}
         {/* ======= AVATAR THAT SHOWS SHEN LOGGED IN  */}
-        <div className="dropdown dropdown-end mr-2">
+
+        {/* <div className="dropdown dropdown-end mr-2">
           <div
             tabIndex={0}
             role="button"
@@ -105,7 +126,7 @@ function Navbar() {
               <a>Logout</a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );
