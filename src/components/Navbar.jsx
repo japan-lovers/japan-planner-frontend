@@ -72,28 +72,45 @@ function Navbar() {
       </div>
 
       <div className="navbar-end">
-        <Link to="/">
-          <button className="btn btn-outline mr-4">Plan trip</button>
-        </Link>
         {!isLoggedIn && (
           <Link to="/login">
-            <button className="btn btn-outline mr-4">Login</button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="w-6 h-6"
+            >
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+            </svg>
           </Link>
         )}
         {isLoggedIn && (
-          <div className="flex items-center">
-            <button className="btn btn-outline mr-4" onClick={logOutUser}>
-              Logout
-            </button>
-            <Link to={`/user/${user._id}`}>
-              <img
-                className="w-10 rounded-full avatar"
-                alt="Tailwind CSS Navbar component"
-                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              />
-            </Link>
-          </div>
+          <Link to={`/user/${user._id}`}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="w-6 h-6"
+            >
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+            </svg>
+          </Link>
+          // <div className="flex items-center">
+          //   <button className="btn btn-outline mr-4" onClick={logOutUser}>
+          //     Logout
+          //   </button>
+          //   <Link to={`/user/${user._id}`}>
+          //     <img
+          //       className="w-10 rounded-full"
+          //       alt="Tailwind CSS Navbar component"
+          //       src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+          //     />
+          //   </Link>
+          // </div>
         )}
+        <Link to="/">
+          <button className="btn btn-outline btn-sm mx-4">Plan trip</button>
+        </Link>
         {/* ======= AVATAR THAT SHOWS SHEN LOGGED IN  */}
 
         {/* <div className="dropdown dropdown-end mr-2">
