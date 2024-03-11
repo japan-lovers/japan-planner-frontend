@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -7,15 +7,15 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-} from '@dnd-kit/core';
-import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+} from "@dnd-kit/core";
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
-import { useEffect } from 'react';
-import tripsService from '../../services/trip.service';
-import activitiesService from '../../services/activities.service';
-import DndDraggableCard from './DndDraggableCard';
-import DayInCalendar from './DayInCalendar';
-import Sidebar from './Sidebar';
+import { useEffect } from "react";
+import tripsService from "../../services/trip.service";
+import activitiesService from "../../services/activities.service";
+import DndDraggableCard from "./DndDraggableCard";
+import DayInCalendar from "./DayInCalendar";
+import Sidebar from "./Sidebar";
 
 export default function AppDndTest({ id }) {
   const [trip, setTrip] = useState(null);
@@ -120,10 +120,10 @@ export default function AppDndTest({ id }) {
           onDragEnd={handleDragEnd}
         >
           <div className="basis-1/4">
-            {' '}
+            {" "}
             {Object.keys(itemsState).map(
               (key) =>
-                key === 'favActivities' && (
+                key === "favActivities" && (
                   <Sidebar
                     id="favActivities"
                     items={items.favActivities}
@@ -133,18 +133,26 @@ export default function AppDndTest({ id }) {
             )}
           </div>
           <div className="flex flex-col basis-3/4">
-            <div className="ml-2">
-              <h1 className="text-2xl ">{trip?.name}</h1>
-              <p className="ml-2 italic">
-                {' '}
-                {trip && datesDiff(trip.startDate, trip.endDate)} days of
-                travel, I am going to {trip?.destinations.map((dest) => dest)}
-              </p>
+            <div className="flex w-tripform justify-between">
+              <div className="ml-2 flex flex-col">
+                <h1 className="text-2xl ">{trip?.name}</h1>
+                <p className="ml-2 italic">
+                  {" "}
+                  {trip && datesDiff(trip.startDate, trip.endDate)} days of
+                  travel, I am going to {trip?.destinations.map((dest) => dest)}
+                </p>
+              </div>
+              <button
+                // onClick={changeEditable}
+                className="btn btn-outline btn-xs mx-2"
+              >
+                Edit
+              </button>
             </div>
             <div className="flex flex-wrap basis-3/4">
               {Object.keys(itemsState).map(
                 (key) =>
-                  key !== 'favActivities' && (
+                  key !== "favActivities" && (
                     <DayInCalendar id={key} items={items[key]} key={key} />
                   )
               )}
@@ -160,11 +168,11 @@ export default function AppDndTest({ id }) {
       <div className="container p-10">
         <ul>
           <li>
-            {' '}
+            {" "}
             my Activities are : {trip?.activities.map(
               (activity) => activity
-            )}{' '}
-          </li>{' '}
+            )}{" "}
+          </li>{" "}
         </ul>
       </div>
     </div>
