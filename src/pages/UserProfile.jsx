@@ -54,6 +54,7 @@ function UserProfilePage() {
         });
 
         const sortedNationalities = allNationalities.sort();
+        sortedNationalities.unshift("Citizen of the world");
         setNationalities(sortedNationalities);
       })
       .catch((error) => console.log(error));
@@ -98,12 +99,10 @@ function UserProfilePage() {
                   {editable ? (
                     nationalities.length > 0 && (
                       <select
+                        defaultValue={nationality}
                         className="select select-sm w-full max-w-48"
                         onChange={(e) => setNationality(e.target.value)}
                       >
-                        <option value="Citizen of the world">
-                          Citizen of the world
-                        </option>
                         {nationalities.map((country, index) => {
                           return (
                             <option key={index} value={country}>
