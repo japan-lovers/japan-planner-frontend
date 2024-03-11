@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import userService from "../services/user.service";
+import React, { useContext, useEffect, useState } from 'react';
+import userService from '../services/user.service';
 import {
   Card,
   CardHeader,
@@ -9,9 +9,9 @@ import {
   Button,
   Tooltip,
   IconButton,
-} from "@material-tailwind/react";
-import { AuthContext } from "../context/auth.context";
-import { useNavigate } from "react-router-dom";
+} from '@material-tailwind/react';
+import { AuthContext } from '../context/auth.context';
+import { useNavigate } from 'react-router-dom';
 
 function CardActivity({ activity }) {
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -26,8 +26,6 @@ function CardActivity({ activity }) {
       .getUser(user._id)
       .then((response) => {
         setFavourites(response.data.favouriteActivities);
-
-        });
       })
       .catch((error) => console.log(error));
   }, []);
@@ -39,10 +37,10 @@ function CardActivity({ activity }) {
         .then()
         .catch((error) => console.log(error));
     } else {
-      navigate("/login");
+      navigate('/login');
     }
   };
-
+  console.log();
   return (
     <Card className="w-card shadow-lg">
       <CardHeader floated={false} color="blue-gray">
