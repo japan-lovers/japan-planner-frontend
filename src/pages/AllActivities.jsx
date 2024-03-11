@@ -25,41 +25,27 @@ function AllActivities() {
         <div className="lg:flex lg:items-center lg:justify-between ml-6 mb-10">
           <div className="min-w-0 flex-1">
             <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-              Back End Developer
+              Browse all activities
             </h2>
-            <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
-              <div className="mt-2 flex items-center text-sm text-gray-500">
-                <span className="ml-3 hidden sm:block">
-                  <button type="button" className="btn btn-outline btn-sm">
-                    View
-                  </button>
-                </span>
-                <span className="ml-3 hidden sm:block">
-                  <button
-                    type="button"
-                    className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  >
-                    View
-                  </button>
-                </span>
-                <span className="ml-3 hidden sm:block">
-                  <button
-                    type="button"
-                    className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  >
-                    View
-                  </button>
-                </span>
-              </div>
+            <div className="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:space-x-6">
+              <button type="button" className="btn btn-outline btn-sm">
+                View
+              </button>
+              <button type="button" className="btn btn-outline btn-sm">
+                View
+              </button>
+              <button type="button" className="btn btn-outline btn-sm">
+                View
+              </button>
             </div>
           </div>
         </div>
-        <div className="flex flex-wrap gap-6 ">
-          {activities.length == 0 ? (
-            <div>Loading...</div>
+        <div className="flex justify-center flex-wrap gap-6 ">
+          {activities.length === 0 ? (
+            <span className="loading loading-ring loading-lg mt-48"></span>
           ) : (
             activities.map((activity) => (
-              <CardActivity name={activity.name} key={activity._id} />
+              <CardActivity activity={activity} key={activity._id} />
             ))
           )}
         </div>

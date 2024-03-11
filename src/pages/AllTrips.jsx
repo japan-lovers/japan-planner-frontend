@@ -23,7 +23,7 @@ function AllTrips() {
     <div className="flex justify-center">
       <div className="max-w-7xl flex flex-col items-start">
         {trips.length === 0 ? (
-          <div>Loading...</div>
+          <span className="loading loading-ring loading-lg mt-48"></span>
         ) : (
           trips.map((trip) => <CardTrips tripData={trip} key={trip._id} />)
         )}
