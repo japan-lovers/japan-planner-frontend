@@ -25,9 +25,7 @@ function AllTrips() {
         {trips.length === 0 ? (
           <div>Loading...</div>
         ) : (
-          trips.map((trip) => (
-            <CardTrips name={trip.destinations} key={trip._id} />
-          ))
+          trips.map((trip) => <CardTrips tripData={trip} key={trip._id} />)
         )}
       </div>
     </div>

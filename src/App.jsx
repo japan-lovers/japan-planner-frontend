@@ -12,6 +12,7 @@ import TripDetails from "./pages/TripDetails";
 import AllActivities from "./pages/AllActivities";
 import ActivityDetails from "./pages/ActivityDetails";
 import Navbar from "./components/Navbar";
+import AppDndTest from "./components/dnd-comp/AppDndTest";
 
 function App() {
   return (
