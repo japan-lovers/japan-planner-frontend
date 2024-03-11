@@ -199,13 +199,21 @@ export default function AppDndTest({ id }) {
             )}
           </div>
           <div className="flex flex-col basis-3/4">
-            <div className="ml-2">
-              <h1 className="text-2xl ">{trip?.name}</h1>
-              <p className="ml-2 italic">
-                {' '}
-                {trip && datesDiff(trip.startDate, trip.endDate)} days of
-                travel, I am going to {trip?.destinations.map((dest) => dest)}
-              </p>
+            <div className="flex w-tripform justify-between">
+              <div className="ml-2 flex flex-col">
+                <h1 className="text-2xl ">{trip?.name}</h1>
+                <p className="ml-2 italic">
+                  {' '}
+                  {trip && datesDiff(trip.startDate, trip.endDate)} days of
+                  travel, I am going to {trip?.destinations.map((dest) => dest)}
+                </p>
+              </div>
+              <button
+                // onClick={changeEditable}
+                className="btn btn-outline btn-xs mx-2"
+              >
+                Edit
+              </button>
             </div>
             <div className="flex flex-wrap basis-3/4">
               {Object.keys(itemsState).map(
@@ -223,9 +231,7 @@ export default function AppDndTest({ id }) {
           </DragOverlay>
         </DndContext>
       </div>
-      <div className="container p-10">
-        <ul></ul>
-      </div>
+      <div className="container p-10"></div>
     </div>
   );
 
