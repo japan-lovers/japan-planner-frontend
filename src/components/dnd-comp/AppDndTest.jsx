@@ -23,13 +23,21 @@ export default function AppDndTest({ id }) {
   const [itemsState, setItemsState] = useState(items);
   const [activeId, setActiveId] = useState();
   const [activeData, setActiveData] = useState();
+  const [activities, setActivities] = useState();
 
   //   ---- CALL TO DATABASE --------------
+
+  const renderActivityByDate = (date, activities) => {
+    return activities
+      .filter((activity) => activity.date === date)
+      .map((activity) => activity.activity);
+  };
+
   const getTrip = () => {
     tripsService
       .getTrip(id)
       .then((response) => {
-        const theTrip = response.data;
+        const { activities, ...theTrip } = response.data;
         const dates = displayDaysBetweenDates(
           theTrip.startDate,
           theTrip.endDate
@@ -37,10 +45,21 @@ export default function AppDndTest({ id }) {
         dates.forEach((date) =>
           setItems((prevs) => ({
             ...prevs,
-            [date]: [],
+            [date]: renderActivityByDate(date, activities),
           }))
         );
+        setActivities(activities);
         setTrip(theTrip);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const updateTripActivities = (newActiv) => {
+    const requestBody = { activities: newActiv };
+    tripsService
+      .updateTrip(id, requestBody)
+      .then((response) => {
+        console.log('successful change of the for');
       })
       .catch((error) => console.log(error));
   };
@@ -49,9 +68,17 @@ export default function AppDndTest({ id }) {
     activitiesService
       .getAllActivities()
       .then((response) => {
+        console.log('FavActivities', response.data);
+        console.log('do I have', activities);
+
         setItems((prevs) => ({
           ...prevs,
-          favActivities: response.data,
+          favActivities: response?.data.filter(
+            (activity) =>
+              !activities
+                ?.map((activity) => activity.activity._id)
+                .includes(activity._id)
+          ),
         }));
       })
       .catch((error) => console.log(error));
@@ -76,29 +103,70 @@ export default function AppDndTest({ id }) {
     date1 = new Date(date1);
     date2 = new Date(date2);
 
-    const differenceInMillisecondes = Math.abs(date2 - date1);
+    const differenceInMilliseconds = Math.abs(date2 - date1);
     const differenceInDays = Math.ceil(
-      differenceInMillisecondes / (1000 * 60 * 60 * 24)
+      differenceInMilliseconds / (1000 * 60 * 60 * 24)
     );
 
     const days = [];
 
+    // Loop through each day between the two dates
     for (let i = 0; i <= differenceInDays; i++) {
       const currentDate = new Date(date1);
       currentDate.setDate(date1.getDate() + i);
-      days.push(currentDate);
+      days.push(currentDate.toISOString()); // Store the date in ISO string format
     }
 
     return days;
   }
 
+  const createNewActivities = (activities, activeId, overContainer) => {
+    const newActivities = [...activities];
+    //CHECK IF WE MOVE IT IN THE SIDEBAR AND DELETE IT FROM ACTIVITIES
+    if (overContainer === 'favActivities') {
+      return newActivities.filter(
+        (activity) => activity.activity._id !== activeId
+      );
+    }
+
+    //CHECK IF WE MOVE IT FROM THE SIDEBAR AND WE ADD IT TO ACTIVITIES
+    if (
+      !newActivities.filter((activity) => activity.activity._id === activeId)
+        .length > 0
+    ) {
+      return [...newActivities, { activity: activeData, date: overContainer }];
+    }
+
+    // OTHERWISE WE CHANGING THE DATE OF THE ACTIVITY INSIDE ACTIVITIES
+    return newActivities.map((activity) => {
+      if (activity.activity._id === activeId) {
+        return { ...activity, date: overContainer };
+      }
+      return activity;
+    });
+  };
+
   useEffect(() => {
     getTrip();
-    getFavActivities();
-    console.log(items);
   }, []);
 
-  useEffect(() => setItemsState(items), [items]);
+  useEffect(() => {
+    setItemsState(items);
+    // console.log(
+    //   'USEEFFECT',
+    //   items.favActivities.filter(
+    //     (activity) =>
+    //       !activities
+    //         ?.map((activity) => activity.activity._id)
+    //         .includes(activity._id)
+    //   )
+    // );
+  }, [items]);
+
+  useEffect(() => {
+    console.log('change in activity');
+    getFavActivities();
+  }, [activities]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -106,8 +174,6 @@ export default function AppDndTest({ id }) {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-
-  console.log(items);
 
   return (
     <div className="flex flex-col">
@@ -158,14 +224,7 @@ export default function AppDndTest({ id }) {
         </DndContext>
       </div>
       <div className="container p-10">
-        <ul>
-          <li>
-            {' '}
-            my Activities are : {trip?.activities.map(
-              (activity) => activity
-            )}{' '}
-          </li>{' '}
-        </ul>
+        <ul></ul>
       </div>
     </div>
   );
@@ -278,7 +337,12 @@ export default function AppDndTest({ id }) {
         ),
       }));
     }
+    console.log('ACTIVE ID', activeId);
+    console.log('OVERCONTAINER', overContainer);
 
+    const newActiv = createNewActivities(activities, activeId, overContainer);
+    setActivities(newActiv);
+    updateTripActivities(newActiv);
     setActiveId(null);
     setActiveData(null);
   }
