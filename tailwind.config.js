@@ -10,6 +10,7 @@ module.exports = withMT({
         tripform: "900px",
         profile: "600px",
         minus: "-30px",
+        card: "290px",
       },
     },
   },

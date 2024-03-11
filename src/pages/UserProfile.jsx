@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import userService from "../services/user.service";
 import tripsService from "../services/trip.service";
 import { AuthContext } from "../context/auth.context";
-// import UserProfile from "../components/UserProfile";
 
 function UserProfilePage() {
   const { id } = useParams();

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from "react";
+import userService from "../services/user.service";
 import {
   Card,
   CardHeader,
@@ -8,39 +9,107 @@ import {
   Button,
   Tooltip,
   IconButton,
-} from '@material-tailwind/react';
+} from "@material-tailwind/react";
+import { AuthContext } from "../context/auth.context";
+import { useNavigate } from "react-router-dom";
 
-function CardActivity({ name }) {
+function CardActivity({ activity }) {
+  const { isLoggedIn, user } = useContext(AuthContext);
+
+  const [favourites, setFavourites] = useState(null);
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    userService
+      .getUser(user._id)
+      .then((response) => {
+        setFavourites(response.data.favouriteActivities);
+
+        });
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const handleAddToFavourites = () => {
+    if (isLoggedIn) {
+      userService
+        .updateUser(user._id)
+        .then()
+        .catch((error) => console.log(error));
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
-    <Card className="w-full max-w-[19rem] shadow-lg">
+    <Card className="w-card shadow-lg">
       <CardHeader floated={false} color="blue-gray">
         <img
-          src="https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-          alt="ui/ux review check"
+          className="w-64 h-48 object-cover"
+          src={activity.image}
+          alt={activity.name}
         />
         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
-        {/* <IconButton
-          size="sm"
-          color="red"
-          variant="text"
-          className="!absolute top-4 right-4 rounded-full"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="h-6 w-6"
+        {/* <div className="!absolute top-2 left-2 px-1 rounded-full text-xs bg-black font-white font-semibold">
+          {activity.category}
+        </div> */}
+        {activity.free && (
+          <Typography
+            color="white"
+            className="!absolute top-2 left-2 bg-gray-900 px-2 text-xs font-semibold rounded-full"
           >
-            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-          </svg>
-        </IconButton> */}
+            FREE
+          </Typography>
+        )}
+        {isFavourite ? (
+          <IconButton
+            onClick={handleAddToFavourites}
+            size="sm"
+            color="black"
+            variant="text"
+            className="!absolute top-2 right-2 rounded-full"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              // fill="currentColor"
+              className="h-6 w-6"
+            >
+              <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+            </svg>
+          </IconButton>
+        ) : (
+          <IconButton
+            onClick={handleAddToFavourites}
+            size="sm"
+            color="red"
+            variant="text"
+            className="!absolute top-2 right-2 rounded-full"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="h-6 w-6"
+            >
+              <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+            </svg>
+          </IconButton>
+        )}
       </CardHeader>
       <CardBody>
-        <div className="mb-3 flex items-center justify-between">
-          <Typography variant="h5" color="blue-gray" className="font-medium">
-            {name}
-          </Typography>
+        <div className="flex items-center justify-between">
           <Typography
+            variant="h5"
+            color="blue-gray"
+            className="font-semibold text-lg"
+          >
+            {activity.name}
+          </Typography>
+
+          {/* <Typography
             color="blue-gray"
             className="flex items-center gap-1.5 font-normal"
           >
@@ -57,14 +126,26 @@ function CardActivity({ name }) {
                 clipRule="evenodd"
               />
             </svg>
-          </Typography>
+          </Typography> */}
         </div>
-        <Typography color="gray">
-          Enter a freshly updated and thoughtfully furnished peaceful home
-          surrounded by ancient trees, stone walls, and open meadows.
+        <span className="text-xs font-medium">{activity.location}</span>
+        <Typography color="gray" className="text-sm mt-2">
+          {activity.description.slice(0, 96)}...
         </Typography>
-        <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
-          <Tooltip content="$129 per night">
+        <div className="group mt-4 flex justify-between items-center gap-3">
+          <Typography
+            color="white"
+            className="px-2 rounded-full text-xs h-4 bg-gray-900 font-white font-semibold"
+          >
+            {activity.category}
+          </Typography>
+          <button
+            color="gray"
+            className="btn btn-xs btn-ghost text-xs font-semibold"
+          >
+            View details
+          </button>
+          {/* <Tooltip content="$129 per night">
             <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +178,7 @@ function CardActivity({ name }) {
                 />
               </svg>
             </span>
-          </Tooltip>
+          </Tooltip> */}
         </div>
       </CardBody>
       {/* <CardFooter className="pt-3">
