@@ -30,19 +30,22 @@ function CardTrips({ tripData }) {
             </div>
             <div className="flex mt-2 mb-2 mr-2 overflow-x-auto">
               {tripData.activities.map((el) => (
-                <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink flex ">
-                  <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
-                    <div className="mx-auto max-w-xs px-8">
-                      <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                        <span className="text-3xl font-bold tracking-tight text-gray-900">
+                <div className="z-1  -mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink flex ">
+                  <div
+                    className="   opacity-80 rounded-2xl  py-10 text-center ring-1 ring-inset bg-cover bg-center ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16"
+                    style={{ backgroundImage: `url(${el.activity.image})` }}
+                  >
+                    <div className="z-10 mx-auto max-w-xs px-8 ">
+                      <p className="mt-6 flex items-baseline justify-center gap-x-2 flex-col ">
+                        <span className=" text-3xl font-bold tracking-tight text-white">
                           {el.activity.name}
                         </span>
-                        <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
+                        <span className="text-sm font-semibold leading-6 tracking-wide text-gray-200">
                           {el.activity.location}
                         </span>
                       </p>
 
-                      <p className="mt-6 text-xs leading-5 text-gray-600">
+                      <p className="mt-6 text-xs leading-5 text-gray-200">
                         {el.activity.category}
                       </p>
                     </div>
