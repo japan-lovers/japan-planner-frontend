@@ -16,6 +16,8 @@ import activitiesService from '../../services/activities.service';
 import DndDraggableCard from './DndDraggableCard';
 import DayInCalendar from './DayInCalendar';
 import Sidebar from './Sidebar';
+import { useNavigate } from 'react-router-dom';
+import DeleteModal from './DeleteModal';
 
 export default function AppDndTest({ id }) {
   const [trip, setTrip] = useState(null);
@@ -24,6 +26,8 @@ export default function AppDndTest({ id }) {
   const [activeId, setActiveId] = useState();
   const [activeData, setActiveData] = useState();
   const [activities, setActivities] = useState();
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   //   ---- CALL TO DATABASE --------------
 
@@ -81,6 +85,13 @@ export default function AppDndTest({ id }) {
           ),
         }));
       })
+      .catch((error) => console.log(error));
+  };
+
+  const handleDelete = () => {
+    tripsService
+      .deleteTrip(id)
+      .then(() => navigate('/trips'))
       .catch((error) => console.log(error));
   };
 
@@ -214,6 +225,12 @@ export default function AppDndTest({ id }) {
               >
                 Edit
               </button>
+              <button
+                onClick={() => setOpen(true)}
+                className="btn btn-outline btn-xs mx-2"
+              >
+                Delete
+              </button>
             </div>
             <div className="flex flex-wrap basis-3/4">
               {Object.keys(itemsState).map(
@@ -232,6 +249,11 @@ export default function AppDndTest({ id }) {
         </DndContext>
       </div>
       <div className="container p-10"></div>
+      <DeleteModal
+        open={open}
+        handleClose={() => setOpen(false)}
+        handleDelete={handleDelete}
+      />
     </div>
   );
 

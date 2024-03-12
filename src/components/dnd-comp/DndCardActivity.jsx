@@ -4,9 +4,11 @@ import { CSS } from '@dnd-kit/utilities';
 
 import DndDraggableCard from './DndDraggableCard';
 import CardActivity from '../CardActivity';
+import { useRef } from 'react';
 
 function DndCardActivity({ name, data, id }) {
   const [isHovered, setIsHovered] = useState(false);
+  const timeoutRef = useRef(null);
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -16,18 +18,36 @@ function DndCardActivity({ name, data, id }) {
     transform: CSS.Transform.toString(transform),
   };
 
+  const handleMouseEnter = () => {
+    // Set a timeout to trigger the change after 2000 milliseconds (2 seconds)
+    timeoutRef.current = setTimeout(() => {
+      setIsHovered(true);
+    }, 1000);
+  };
+
+  const handleMouseLeave = () => {
+    // Clear the timeout if the mouse leaves the card before the delay time has passed
+    clearTimeout(timeoutRef.current);
+
+    setTimeout(() => {
+      setIsHovered(false);
+    }, 1000);
+  };
+
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {/* {isHovered ? (
-      <CardActivity name={name} id={name} /> */}
-      {/* ) : ( */}
-      <DndDraggableCard name={data?.name} id={id} />
-      {/*)}
-      <div
-        className="absolute inset-0 z-10"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      ></div> */}
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {isHovered ? (
+        <CardActivity activity={data} key={data._id} />
+      ) : (
+        <DndDraggableCard name={data?.name} id={id} />
+      )}
     </div>
   );
 }

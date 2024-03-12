@@ -15,7 +15,7 @@ function Sidebar(props) {
   });
 
   return (
-    <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+    <Card className="h-[calc(100vh-5rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 p-4">
         <Typography variant="h5" color="blue-gray">
           Sidebar
@@ -29,7 +29,7 @@ function Sidebar(props) {
         strategy={verticalListSortingStrategy}
         Scrollable
       >
-        <div ref={setNodeRef} className="flex flex-col gap-2">
+        <div ref={setNodeRef} className="flex flex-col gap-2 overflow-auto ">
           {items?.map((activity) => {
             return (
               <DndCardActivity

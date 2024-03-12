@@ -47,7 +47,7 @@ function CardActivity({ activity }) {
       navigate("/login");
     }
   };
-
+  console.log();
   return (
     <Card className="w-card shadow-lg">
       <CardHeader floated={false} color="blue-gray">
