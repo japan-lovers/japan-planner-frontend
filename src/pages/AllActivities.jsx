@@ -1,15 +1,28 @@
-import { useState, useEffect, useContext } from "react";
-import activitiesService from "../services/activities.service";
-import CardActivity from "../components/CardActivity";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/auth.context";
-import userService from "../services/user.service";
+import { useState, useEffect, useContext } from 'react';
+import activitiesService from '../services/activities.service';
+import CardActivity from '../components/CardActivity';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/auth.context';
+import userService from '../services/user.service';
+
+const category = [
+  'Museum',
+  'Outdoor',
+  'Traditional',
+  'Anime',
+  'Observation deck',
+  'Sports',
+  'Theme park',
+  'Festival',
+];
 
 function AllActivities() {
   const { isLoggedIn, user } = useContext(AuthContext);
 
   const [activities, setActivities] = useState(null);
+  const [filteredActivities, setFilteredActivities] = useState([]);
   const [favouriteActivities, setFavouriteActivities] = useState([]);
+  const [filterByCategory, setFilterByCategory] = useState([]);
   // const [isFavourite, setIsFavourite] = useState(false);
 
   const navigate = useNavigate();
@@ -19,6 +32,7 @@ function AllActivities() {
       .getAllActivities()
       .then((response) => {
         setActivities(response.data);
+        setFilteredActivities(response.data);
       })
       .catch((error) => console.log(error));
   };
@@ -54,6 +68,22 @@ function AllActivities() {
     return updatedActivities;
   };
 
+  // FILTERS ================
+  const filterByCat = (cat) => {
+    if (filterByCategory.includes(cat)) {
+      return setFilterByCategory((prev) => prev.filter((el) => el !== cat));
+    }
+    return setFilterByCategory((prev) => [...prev, cat]);
+  };
+
+  useEffect(() => {
+    setFilteredActivities(
+      filterByCategory.length > 0
+        ? activities.filter((el) => filterByCategory.includes(el.category))
+        : activities
+    );
+  }, [filterByCategory]);
+
   return (
     <div className="flex justify-center">
       <div className="max-w-7xl flex flex-col p-4 ">
@@ -63,15 +93,22 @@ function AllActivities() {
               Browse all activities
             </h2>
             <div className="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:space-x-6">
-              <button type="button" className="btn btn-outline btn-sm">
-                View
-              </button>
-              <button type="button" className="btn btn-outline btn-sm">
-                View
-              </button>
-              <button type="button" className="btn btn-outline btn-sm">
-                View
-              </button>
+              {category.map((cat) => {
+                return (
+                  <button
+                    type="button"
+                    className={`btn ${
+                      filterByCategory.includes(cat)
+                        ? 'bg-black text-white'
+                        : 'btn-outline'
+                    } active btn-sm`}
+                    onClick={() => filterByCat(cat)}
+                    key={cat}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -81,7 +118,7 @@ function AllActivities() {
           ) : activities.length === 0 ? (
             <div className="font-thin text-sm m-4">No activities available</div>
           ) : (
-            activities.map((activity) => (
+            filteredActivities.map((activity) => (
               <CardActivity
                 activity={activity}
                 key={activity._id}
