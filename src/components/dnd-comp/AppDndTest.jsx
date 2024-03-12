@@ -244,7 +244,12 @@ export default function AppDndTest({ id }) {
               {Object.keys(itemsState).map(
                 (key) =>
                   key !== 'favActivities' && (
-                    <DayInCalendar id={key} items={items[key]} key={key} />
+                    <DayInCalendar
+                      id={key}
+                      items={items[key]}
+                      key={key}
+                      favs={favs}
+                    />
                   )
               )}
             </div>
