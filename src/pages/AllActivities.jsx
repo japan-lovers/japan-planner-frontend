@@ -1,23 +1,58 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import activitiesService from "../services/activities.service";
 import CardActivity from "../components/CardActivity";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
+import userService from "../services/user.service";
 
 function AllActivities() {
+  const { isLoggedIn, user } = useContext(AuthContext);
+
   const [activities, setActivities] = useState(null);
+  const [favouriteActivities, setFavouriteActivities] = useState([]);
+  // const [isFavourite, setIsFavourite] = useState(false);
+
+  const navigate = useNavigate();
 
   const getAllActivities = () => {
     activitiesService
       .getAllActivities()
       .then((response) => {
-        console.log(response);
         setActivities(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const getFavourites = () => {
+    userService
+      .getUser(user._id)
+      .then((response) => {
+        setFavouriteActivities(response.data.favouriteActivities);
       })
       .catch((error) => console.log(error));
   };
 
   useEffect(() => {
     getAllActivities();
+    if (isLoggedIn) {
+      getFavourites();
+    }
   }, []);
+
+  const updateFavourites = (activity) => {
+    let updatedActivities;
+
+    if (favouriteActivities.some((a) => a._id === activity._id)) {
+      updatedActivities = favouriteActivities.filter(
+        (a) => a._id !== activity._id
+      );
+    } else {
+      updatedActivities = [...favouriteActivities, activity];
+    }
+
+    setFavouriteActivities(updatedActivities);
+    return updatedActivities;
+  };
 
   return (
     <div className="flex justify-center">
@@ -47,7 +82,11 @@ function AllActivities() {
             <div className="font-thin text-sm m-4">No activities available</div>
           ) : (
             activities.map((activity) => (
-              <CardActivity activity={activity} key={activity._id} />
+              <CardActivity
+                activity={activity}
+                key={activity._id}
+                updateFavourites={updateFavourites}
+              />
             ))
           )}
         </div>
