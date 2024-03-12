@@ -26,6 +26,7 @@ function CardActivity({ activity }) {
       .getUser(user._id)
       .then((response) => {
         setFavourites(response.data.favouriteActivities);
+
         response.data.favouriteActivities.forEach((elm) => {
           if (elm._id === activity._id) {
             setIsFavourite(true);
@@ -47,6 +48,7 @@ function CardActivity({ activity }) {
       navigate("/login");
     }
   };
+  console.log();
   console.log();
   return (
     <Card className="w-card shadow-lg">
