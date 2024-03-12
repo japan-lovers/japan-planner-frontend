@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import tripsService from "../services/trip.service";
-import CardTrips from "../components/CardTrips";
+import { useState, useEffect } from 'react';
+import tripsService from '../services/trip.service';
+import CardTrips from '../components/CardTrips';
 
 function AllTrips() {
   const [trips, setTrips] = useState(null);
@@ -18,7 +18,6 @@ function AllTrips() {
   useEffect(() => {
     getAllTrips();
   }, []);
-
   return (
     <div className="flex justify-center">
       <div className="max-w-7xl flex flex-col items-start">

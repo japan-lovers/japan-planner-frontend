@@ -163,15 +163,6 @@ export default function AppDndTest({ id }) {
 
   useEffect(() => {
     setItemsState(items);
-    // console.log(
-    //   'USEEFFECT',
-    //   items.favActivities.filter(
-    //     (activity) =>
-    //       !activities
-    //         ?.map((activity) => activity.activity._id)
-    //         .includes(activity._id)
-    //   )
-    // );
   }, [items]);
 
   useEffect(() => {

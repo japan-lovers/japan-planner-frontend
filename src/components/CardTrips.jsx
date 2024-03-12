@@ -11,7 +11,7 @@ const includedFeatures = [
 ];
 
 function CardTrips({ tripData }) {
-  console.log(tripData);
+  console.log(tripData.activities.map((el) => el.activity));
   return (
     <div>
       <Link to={`/trips/${tripData._id}`}>
@@ -21,67 +21,34 @@ function CardTrips({ tripData }) {
               <h3 className="text-2xl font-bold tracking-tight text-gray-900">
                 {tripData.destinations}
               </h3>
+
               <p className="mt-6 text-base leading-7 text-gray-600">
                 Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque
                 amet indis perferendis blanditiis repellendus etur quidem
                 assumenda.
               </p>
-              <div className="flex mt-2 mb-2 hover:overflow-x-scroll">
-                <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink flex">
+            </div>
+            <div className="flex mt-2 mb-2 mr-2 overflow-x-auto">
+              {tripData.activities.map((el) => (
+                <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink flex ">
                   <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
                     <div className="mx-auto max-w-xs px-8">
                       <p className="mt-6 flex items-baseline justify-center gap-x-2">
                         <span className="text-3xl font-bold tracking-tight text-gray-900">
-                          Gion Matsuri
+                          {el.activity.name}
                         </span>
                         <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
-                          Kyoto
+                          {el.activity.location}
                         </span>
                       </p>
 
                       <p className="mt-6 text-xs leading-5 text-gray-600">
-                        Festival
+                        {el.activity.category}
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink flex">
-                  <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
-                    <div className="mx-auto max-w-xs px-8">
-                      <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                        <span className="text-2xl font-bold tracking-tight text-gray-900">
-                          Tokyo Joypolis
-                        </span>
-                        <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
-                          Tokyo
-                        </span>
-                      </p>
-
-                      <p className="mt-6 text-xs leading-5 text-gray-600">
-                        Theme Park
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink flex">
-                  <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
-                    <div className="mx-auto max-w-xs px-8">
-                      <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                        <span className="text-3xl font-bold tracking-tight text-gray-900">
-                          SHIBUYA SKY
-                        </span>
-                        <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
-                          Tokyo
-                        </span>
-                      </p>
-
-                      <p className="mt-6 text-xs leading-5 text-gray-600">
-                        MUSEUM
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
