@@ -3,7 +3,7 @@ import activitiesService from "../services/activities.service";
 import CardActivity from "../components/CardActivity";
 
 function AllActivities() {
-  const [activities, setActivities] = useState([]);
+  const [activities, setActivities] = useState(null);
 
   const getAllActivities = () => {
     activitiesService
@@ -41,8 +41,10 @@ function AllActivities() {
           </div>
         </div>
         <div className="flex justify-center flex-wrap gap-6 ">
-          {activities.length === 0 ? (
+          {activities === null ? (
             <span className="loading loading-ring loading-lg mt-48"></span>
+          ) : activities.length === 0 ? (
+            <div className="font-thin text-sm m-4">No activities available</div>
           ) : (
             activities.map((activity) => (
               <CardActivity activity={activity} key={activity._id} />
