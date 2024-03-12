@@ -13,43 +13,49 @@ import {
 import { AuthContext } from '../context/auth.context';
 import { useNavigate } from 'react-router-dom';
 
-function CardActivity({ activity }) {
+function CardActivity({ activity, updateFavourites }) {
   const { isLoggedIn, user } = useContext(AuthContext);
 
-  const [favourites, setFavourites] = useState(null);
+  const [heartedActivities, setHeartedActivities] = useState([]);
   const [isFavourite, setIsFavourite] = useState(false);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    userService
-      .getUser(user?._id)
-      .then((response) => {
-        setFavourites(response.data.favouriteActivities);
+  if (isLoggedIn) {
+    useEffect(() => {
+      userService
+        .getUser(user._id)
+        .then((response) => {
+          setHeartedActivities(response.data.favouriteActivities);
 
-        response.data.favouriteActivities.forEach((elm) => {
-          if (elm._id === activity._id) {
-            setIsFavourite(true);
+          response.data.favouriteActivities.forEach((elm) => {
+            if (elm._id === activity._id) {
+              setIsFavourite(true);
+              return;
+            }
             return;
-          }
-          return;
-        });
-      })
-      .catch((error) => console.log(error));
-  }, []);
+          });
+        })
+        .catch((error) => console.log(error));
+    }, []);
+  }
 
   const handleAddToFavourites = () => {
     if (isLoggedIn) {
+      setIsFavourite(!isFavourite);
+      const favouriteActivities = updateFavourites(activity);
+
+      const requestBody = { favouriteActivities };
+
       userService
-        .updateUser(user._id)
+        .updateUser(user._id, requestBody)
         .then()
         .catch((error) => console.log(error));
     } else {
       navigate('/login');
     }
   };
-  console.log();
-  console.log();
+
   return (
     <Card className="w-card shadow-lg">
       <CardHeader floated={false} color="blue-gray">
@@ -80,28 +86,40 @@ function CardActivity({ activity }) {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
               className="h-6 w-6"
+              fill="white"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
             </svg>
           </IconButton>
         ) : (
           <IconButton
             onClick={handleAddToFavourites}
             size="sm"
-            color="white"
             variant="text"
+            color="white"
             className="!absolute top-2 right-2 rounded-full"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              // fill="currentColor"
               className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
             </svg>
           </IconButton>
         )}
