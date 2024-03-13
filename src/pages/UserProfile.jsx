@@ -146,7 +146,7 @@ function UserProfilePage() {
             {editable ? (
               <form ref={formRef} className="w-full">
                 <textarea
-                  className="textarea w-11/12 h-40 m-6"
+                  className="textarea textarea-bordered w-11/12 h-40 m-6"
                   type="text"
                   value={intro}
                   onChange={(e) => setIntro(e.target.value)}
