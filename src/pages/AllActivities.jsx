@@ -1,19 +1,19 @@
-import { useState, useEffect, useContext } from 'react';
-import activitiesService from '../services/activities.service';
-import CardActivity from '../components/CardActivity';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/auth.context';
-import userService from '../services/user.service';
+import { useState, useEffect, useContext } from "react";
+import activitiesService from "../services/activities.service";
+import CardActivity from "../components/CardActivity";
+
+import { AuthContext } from "../context/auth.context";
+import userService from "../services/user.service";
 
 const category = [
-  'Museum',
-  'Outdoor',
-  'Traditional',
-  'Anime',
-  'Observation deck',
-  'Sports',
-  'Theme park',
-  'Festival',
+  "Museum",
+  "Outdoor",
+  "Traditional",
+  "Anime",
+  "Observation deck",
+  "Sports",
+  "Theme park",
+  "Festival",
 ];
 
 function AllActivities() {
@@ -23,9 +23,6 @@ function AllActivities() {
   const [filteredActivities, setFilteredActivities] = useState([]);
   const [favouriteActivities, setFavouriteActivities] = useState([]);
   const [filterByCategory, setFilterByCategory] = useState([]);
-  // const [isFavourite, setIsFavourite] = useState(false);
-
-  const navigate = useNavigate();
 
   const getAllActivities = () => {
     activitiesService
@@ -99,8 +96,8 @@ function AllActivities() {
                     type="button"
                     className={`btn ${
                       filterByCategory.includes(cat)
-                        ? 'bg-black text-white'
-                        : 'btn-outline'
+                        ? "bg-black text-white"
+                        : "btn-outline"
                     } active btn-sm`}
                     onClick={() => filterByCat(cat)}
                     key={cat}
