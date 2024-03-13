@@ -9,7 +9,10 @@ module.exports = withMT({
       spacing: {
         tripform: "900px",
         profile: "600px",
-        minus: "-30px",
+        minusminus: "-200px",
+        minus: "-150px",
+        minus50: "-50px",
+        minus40: "-40px",
         card: "290px",
         imgw: "600px",
         imgh: "450px",

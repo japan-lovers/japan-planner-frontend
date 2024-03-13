@@ -154,7 +154,7 @@ function CardActivity({ activity, updateFavourites }) {
         </div>
         <span className="text-xs font-medium">{activity.location}</span>
         <Typography color="gray" className="text-sm mt-2">
-          {activity.description.slice(0, 96)}...
+          {activity.description.slice(0, 95)}...
         </Typography>
         <div className="group mt-4 flex justify-between items-center gap-3">
           <Typography
