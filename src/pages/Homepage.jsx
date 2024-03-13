@@ -1,5 +1,5 @@
 import TripForm from "../components/TripForm";
-import introImg from "../public/japan.jpg";
+import introImg from "../../public/japan.jpg";
 
 function Homepage() {
   return (
