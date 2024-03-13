@@ -8,11 +8,21 @@ import {
 import DndCardActivity from './DndCardActivity';
 
 function Sidebar(props) {
-  const { id, items } = props;
+  const { id, items, favs } = props;
 
   const { setNodeRef } = useDroppable({
     id,
   });
+
+  // console.log(
+  //   'FAVS IN SIDEBAR',
+  //   items?.reduce((acc, element) => {
+  //     if (favs?.includes(element._id)) {
+  //       return [element, ...acc];
+  //     }
+  //     return [...acc, element];
+  //   }, [])
+  // );
 
   return (
     <Card className="h-[calc(100vh-5rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
@@ -30,16 +40,23 @@ function Sidebar(props) {
         Scrollable
       >
         <div ref={setNodeRef} className="flex flex-col gap-2 overflow-auto ">
-          {items?.map((activity) => {
-            return (
-              <DndCardActivity
-                name={activity.name}
-                data={activity}
-                key={activity._id}
-                id={activity._id}
-              />
-            );
-          })}
+          {items
+            ?.reduce((acc, element) => {
+              if (favs?.includes(element._id)) {
+                return [element, ...acc];
+              }
+              return [...acc, element];
+            }, [])
+            .map((activity) => {
+              return (
+                <DndCardActivity
+                  data={activity}
+                  key={activity._id}
+                  id={activity._id}
+                  isFavorite={favs?.includes(activity._id)}
+                />
+              );
+            })}
         </div>
       </SortableContext>
     </Card>

@@ -8,7 +8,7 @@ import {
 } from '@dnd-kit/sortable';
 
 function DayInCalendar(props) {
-  const { id, items } = props;
+  const { id, items, favs } = props;
 
   const { setNodeRef } = useDroppable({
     id,
@@ -45,6 +45,7 @@ function DayInCalendar(props) {
                 data={activity}
                 key={activity._id}
                 id={activity._id}
+                isFavorite={favs?.includes(activity._id)}
               />
             );
           })}

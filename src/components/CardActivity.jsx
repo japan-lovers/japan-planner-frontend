@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import userService from "../services/user.service";
+import React, { useContext, useEffect, useState } from 'react';
+import userService from '../services/user.service';
 import {
   Card,
   CardHeader,
@@ -9,9 +9,9 @@ import {
   Button,
   Tooltip,
   IconButton,
-} from "@material-tailwind/react";
-import { AuthContext } from "../context/auth.context";
-import { useNavigate } from "react-router-dom";
+} from '@material-tailwind/react';
+import { AuthContext } from '../context/auth.context';
+import { useNavigate } from 'react-router-dom';
 
 function CardActivity({ activity, updateFavourites }) {
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -52,7 +52,7 @@ function CardActivity({ activity, updateFavourites }) {
         .then()
         .catch((error) => console.log(error));
     } else {
-      navigate("/login");
+      navigate('/login');
     }
   };
 

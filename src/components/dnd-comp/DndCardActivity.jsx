@@ -6,7 +6,7 @@ import DndDraggableCard from './DndDraggableCard';
 import CardActivity from '../CardActivity';
 import { useRef } from 'react';
 
-function DndCardActivity({ name, data, id }) {
+function DndCardActivity({ isFavorite, data, id }) {
   const [isHovered, setIsHovered] = useState(false);
   const timeoutRef = useRef(null);
 
@@ -46,7 +46,7 @@ function DndCardActivity({ name, data, id }) {
       {isHovered ? (
         <CardActivity activity={data} key={data._id} />
       ) : (
-        <DndDraggableCard name={data?.name} id={id} />
+        <DndDraggableCard name={data?.name} id={id} isFav={isFavorite} />
       )}
     </div>
   );

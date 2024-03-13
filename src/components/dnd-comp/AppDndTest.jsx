@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   DndContext,
   DragOverlay,
@@ -11,8 +11,10 @@ import {
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 
 import { useEffect } from 'react';
+import { AuthContext } from '../../context/auth.context';
 import tripsService from '../../services/trip.service';
 import activitiesService from '../../services/activities.service';
+import userService from '../../services/user.service';
 import DndDraggableCard from './DndDraggableCard';
 import DayInCalendar from './DayInCalendar';
 import Sidebar from './Sidebar';
@@ -20,12 +22,15 @@ import { useNavigate } from 'react-router-dom';
 import DeleteModal from './DeleteModal';
 
 export default function AppDndTest({ id }) {
+  const { isLoggedIn, user } = useContext(AuthContext);
   const [trip, setTrip] = useState(null);
   const [items, setItems] = useState({});
   const [itemsState, setItemsState] = useState(items);
   const [activeId, setActiveId] = useState();
   const [activeData, setActiveData] = useState();
   const [activities, setActivities] = useState();
+  const [favs, setFavs] = useState();
+
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -68,7 +73,7 @@ export default function AppDndTest({ id }) {
       .catch((error) => console.log(error));
   };
 
-  const getFavActivities = () => {
+  const getActivities = () => {
     activitiesService
       .getAllActivities()
       .then((response) => {
@@ -95,6 +100,17 @@ export default function AppDndTest({ id }) {
       .catch((error) => console.log(error));
   };
 
+  // ----- GET THE FAVOURITES IDS ----
+  const getFavs = () => {
+    userService
+      .getUser(user?._id)
+      .then((response) => {
+        setFavs(response.data.favouriteActivities.map((el) => el._id));
+      })
+      .catch((error) => console.log(error));
+  };
+
+  console.log('favs', favs);
   //  ----- Function to know how many days the trip is ---------------
   function datesDiff(date1, date2) {
     date1 = new Date(date1);
@@ -163,20 +179,11 @@ export default function AppDndTest({ id }) {
 
   useEffect(() => {
     setItemsState(items);
-    // console.log(
-    //   'USEEFFECT',
-    //   items.favActivities.filter(
-    //     (activity) =>
-    //       !activities
-    //         ?.map((activity) => activity.activity._id)
-    //         .includes(activity._id)
-    //   )
-    // );
+    getFavs();
   }, [items]);
 
   useEffect(() => {
-    console.log('change in activity');
-    getFavActivities();
+    getActivities();
   }, [activities]);
 
   const sensors = useSensors(
@@ -205,6 +212,7 @@ export default function AppDndTest({ id }) {
                     id="favActivities"
                     items={items.favActivities}
                     key={key}
+                    favs={favs}
                   />
                 )
             )}
@@ -236,7 +244,12 @@ export default function AppDndTest({ id }) {
               {Object.keys(itemsState).map(
                 (key) =>
                   key !== 'favActivities' && (
-                    <DayInCalendar id={key} items={items[key]} key={key} />
+                    <DayInCalendar
+                      id={key}
+                      items={items[key]}
+                      key={key}
+                      favs={favs}
+                    />
                   )
               )}
             </div>
