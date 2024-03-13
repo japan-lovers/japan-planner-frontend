@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Autocomplete, useLoadScript } from "@react-google-maps/api";
 import activitiesService from "../services/activities.service";
 import "react-dates/initialize";
 import { DateRangePicker, SingleDatePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
 
-function CreateActivity() {
+function CreateActivity({ isOpen, handleCloseModal, getAllActivities }) {
+  if (!isOpen) return null;
+
   const [searchResult, setSearchResult] = useState("");
   const [enumCategories, setEnumCategories] = useState([]);
   const [focusedInput, setFocusedInput] = useState("startDate");
@@ -26,8 +27,6 @@ function CreateActivity() {
   const [selectDates, setSelectDates] = useState(true);
   const [selectMultipleDates, setSelectMultipleDates] = useState(false);
   const [isRange, setIsRange] = useState(false);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     activitiesService
@@ -74,10 +73,6 @@ function CreateActivity() {
     setEndDate(date);
   };
 
-  //   const onFocusChange = ({ focused }) => {
-  //     setFocused(focused);
-  //   };
-
   const handleCreateActivity = (e) => {
     e.preventDefault();
 
@@ -98,231 +93,263 @@ function CreateActivity() {
 
     activitiesService
       .createActivity(requestBody)
-      .then(
-        (response) => console.log(response.data)
-        //   navigate("/activities")
-      )
+      .then((response) => {
+        getAllActivities();
+        handleCloseModal();
+      })
       .catch((error) => console.log(error));
   };
 
   return (
     <div className="flex justify-center">
       {!isLoaded ? (
-        <span className="loading loading-ring loading-lg mt-48"></span>
+        <span className="loading loading-ring loading-lg mt-48 fixed bg-white"></span>
       ) : (
-        <form onSubmit={handleCreateActivity} className="flex flex-col">
-          <div className="flex">
-            <div className="flex flex-col mr-3">
-              <label>Name:</label>
-              <input
-                required
-                type="text"
-                placeholder="Name"
-                value={name}
-                className="input input-sm input-bordered w-96 my-1"
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-              <label>Category:</label>
-              <select
-                defaultValue={category}
-                required
-                type="text"
-                placeholder="Category"
-                className="select select-sm select-bordered w-96 my-1"
-                onChange={(e) => {
-                  setCategory(e.target.value);
-                }}
-              >
-                <option value="">Select category</option>
-                {enumCategories.map((categ, index) => {
-                  return (
-                    <option key={index} value={categ}>
-                      {categ}
-                    </option>
-                  );
-                })}
-              </select>
-              <label>Address:</label>
-              <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onLoad}>
-                <input
-                  type="text"
-                  placeholder="Address"
-                  className="input input-sm input-bordered w-96 my-1"
-                  value={address}
-                  onChange={(e) => {
-                    setAddress(e.target.value);
-                  }}
-                />
-              </Autocomplete>
-              <label>Location:</label>
-              <input
-                required
-                type="text"
-                placeholder="Location"
-                value={location}
-                className="input input-sm input-bordered w-96 my-1"
-                onChange={(e) => {
-                  setLocation(e.target.value);
-                }}
-              />{" "}
-              <div className="flex justify-between w-96 my-1">
-                <legend>Is it open all year?</legend>
-                <div className="flex">
-                  <label className="flex items-center mx-1">
-                    <input
-                      defaultChecked
-                      type="radio"
-                      value="true"
-                      name="openAllYear"
-                      className="radio radio-sm mx-1"
-                      onChange={(e) => {
-                        setOpenAllYear(e.target.value);
-                      }}
+        <div className="flex justify-center">
+          <div className="bg-modalbg fixed w-full h-full z-40 top-0"></div>
+          <div className="fixed bg-white top-0 z-50 p-14 rounded-xl shadow-md">
+            <form onSubmit={handleCreateActivity} className="flex flex-col">
+              <div className="flex justify-between items-baseline">
+                <h1 className="font-bold text-2xl mb-4">
+                  Create your own activity:
+                </h1>
+                <button
+                  onClick={handleCloseModal}
+                  className="btn btn-circle btn-ghost"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
                     />
-                    Yes
-                  </label>
-
-                  <label className="flex items-center mx-1">
-                    <input
-                      type="radio"
-                      value="false"
-                      name="openAllYear"
-                      className="radio radio-sm mx-1"
-                      onChange={(e) => {
-                        setOpenAllYear(e.target.value);
-                      }}
-                    />
-                    No
-                  </label>
-                </div>
+                  </svg>
+                </button>
               </div>
-            </div>
-            <div className="flex flex-col ml-3">
-              <label>Image:</label>
-              <input
-                required
-                type="text"
-                placeholder="Add a url"
-                value={image}
-                className="input input-sm input-bordered w-96 my-1"
-                onChange={(e) => {
-                  setImage(e.target.value);
-                }}
-              />
-
-              <label>Description:</label>
-              <textarea
-                type="text"
-                placeholder="Description"
-                value={description}
-                className="textarea textarea-bordered w-96 h-40 my-1"
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-
-              <div className="flex justify-between w-96 my-1">
-                <legend>Is it free?</legend>
-                <div className="flex">
-                  <label className="flex items-center mx-1">
+              <div className="flex">
+                <div className="flex flex-col mr-3">
+                  <label>Name:</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Name"
+                    value={name}
+                    className="input input-sm input-bordered w-96 my-1"
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                  />
+                  <label>Category:</label>
+                  <select
+                    defaultValue={category}
+                    required
+                    type="text"
+                    placeholder="Category"
+                    className="select select-sm select-bordered w-96 my-1"
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                    }}
+                  >
+                    <option value="">Select category</option>
+                    {enumCategories.map((categ, index) => {
+                      return (
+                        <option key={index} value={categ}>
+                          {categ}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <label>Address:</label>
+                  <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onLoad}>
                     <input
-                      type="radio"
-                      value="true"
-                      name="free"
-                      className="radio radio-sm mx-1"
+                      type="text"
+                      placeholder="Address"
+                      className="input input-sm input-bordered w-96 my-1"
+                      value={address}
                       onChange={(e) => {
-                        setFree(e.target.value);
+                        setAddress(e.target.value);
                       }}
                     />
-                    Yes
-                  </label>
+                  </Autocomplete>
+                  <label>Location:</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Location"
+                    value={location}
+                    className="input input-sm input-bordered w-96 my-1"
+                    onChange={(e) => {
+                      setLocation(e.target.value);
+                    }}
+                  />{" "}
+                  <div className="flex justify-between w-96 my-1">
+                    <legend>Is it open all year?</legend>
+                    <div className="flex">
+                      <label className="flex items-center mx-1">
+                        <input
+                          defaultChecked
+                          type="radio"
+                          value="true"
+                          name="openAllYear"
+                          className="radio radio-sm mx-1"
+                          onChange={(e) => {
+                            setOpenAllYear(e.target.value);
+                          }}
+                        />
+                        Yes
+                      </label>
 
-                  <label className="flex items-center mx-1">
-                    <input
-                      type="radio"
-                      value="false"
-                      name="free"
-                      className="radio radio-sm mx-1"
-                      onChange={(e) => {
-                        setFree(e.target.value);
-                      }}
-                    />
-                    No
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col items-center">
-            {selectDates && (
-              <div className="flex flex-col w-96 my-1">
-                <div className="flex justify-between">
-                  <label className="my-1">When is it?</label>
-
-                  <div className="flex">
-                    <label className="flex items-center mx-1">
-                      <input
-                        defaultChecked
-                        type="radio"
-                        value="false"
-                        name="isRange"
-                        className="radio radio-sm mx-1"
-                        onChange={(e) => {
-                          setIsRange(e.target.value);
-                        }}
-                      />
-                      One date
-                    </label>
-
-                    <label className="flex items-center mx-1">
-                      <input
-                        type="radio"
-                        value="true"
-                        name="isRange"
-                        className="radio radio-sm mx-1"
-                        onChange={(e) => {
-                          setIsRange(e.target.value);
-                        }}
-                      />
-                      Multiple
-                    </label>
+                      <label className="flex items-center mx-1">
+                        <input
+                          type="radio"
+                          value="false"
+                          name="openAllYear"
+                          className="radio radio-sm mx-1"
+                          onChange={(e) => {
+                            setOpenAllYear(e.target.value);
+                          }}
+                        />
+                        No
+                      </label>
+                    </div>
                   </div>
                 </div>
-                {selectMultipleDates ? (
-                  <SingleDatePicker
-                    date={startDate}
-                    onDateChange={handleOnDateChange}
-                    focused={focus}
-                    onFocusChange={({ focused }) => setFocus(focused)}
-                    numberOfMonths={1}
-                    showClearDate={true}
-                    isOutsideRange={() => false}
+                <div className="flex flex-col ml-3">
+                  <label>Image:</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Add a url"
+                    value={image}
+                    className="input input-sm input-bordered w-96 my-1"
+                    onChange={(e) => {
+                      setImage(e.target.value);
+                    }}
                   />
-                ) : (
-                  <DateRangePicker
-                    endDate={endDate}
-                    endDateId="endDate"
-                    focusedInput={focusedInput.focusedInput}
-                    isOutsideRange={() => null}
-                    onDatesChange={onDatesChange}
-                    onFocusChange={(focusedInput) =>
-                      setFocusedInput({ focusedInput })
-                    }
-                    startDate={startDate}
-                    startDateId="startDate"
-                  />
-                )}
-              </div>
-            )}
 
-            <button type="submit" className="btn btn-outline btn-sm w-24 m-6">
-              Create
-            </button>
+                  <label>Description:</label>
+                  <textarea
+                    type="text"
+                    placeholder="Description"
+                    value={description}
+                    className="textarea textarea-bordered w-96 h-40 my-1"
+                    onChange={(e) => {
+                      setDescription(e.target.value);
+                    }}
+                  />
+
+                  <div className="flex justify-between w-96 my-1">
+                    <legend>Is it free?</legend>
+                    <div className="flex">
+                      <label className="flex items-center mx-1">
+                        <input
+                          type="radio"
+                          value="true"
+                          name="free"
+                          className="radio radio-sm mx-1"
+                          onChange={(e) => {
+                            setFree(e.target.value);
+                          }}
+                        />
+                        Yes
+                      </label>
+
+                      <label className="flex items-center mx-1">
+                        <input
+                          type="radio"
+                          value="false"
+                          name="free"
+                          className="radio radio-sm mx-1"
+                          onChange={(e) => {
+                            setFree(e.target.value);
+                          }}
+                        />
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                {selectDates && (
+                  <div className="flex flex-col w-96 my-1">
+                    <div className="flex justify-between">
+                      <label className="my-1">When is it?</label>
+
+                      <div className="flex">
+                        <label className="flex items-center mx-1">
+                          <input
+                            defaultChecked
+                            type="radio"
+                            value="false"
+                            name="isRange"
+                            className="radio radio-sm mx-1"
+                            onChange={(e) => {
+                              setIsRange(e.target.value);
+                            }}
+                          />
+                          One date
+                        </label>
+
+                        <label className="flex items-center mx-1">
+                          <input
+                            type="radio"
+                            value="true"
+                            name="isRange"
+                            className="radio radio-sm mx-1"
+                            onChange={(e) => {
+                              setIsRange(e.target.value);
+                            }}
+                          />
+                          Multiple
+                        </label>
+                      </div>
+                    </div>
+                    {selectMultipleDates ? (
+                      <SingleDatePicker
+                        date={startDate}
+                        onDateChange={handleOnDateChange}
+                        focused={focus}
+                        onFocusChange={({ focused }) => setFocus(focused)}
+                        numberOfMonths={1}
+                        showClearDate={true}
+                        isOutsideRange={() => false}
+                      />
+                    ) : (
+                      <DateRangePicker
+                        endDate={endDate}
+                        endDateId="endDate"
+                        focusedInput={focusedInput.focusedInput}
+                        isOutsideRange={() => null}
+                        onDatesChange={onDatesChange}
+                        onFocusChange={(focusedInput) =>
+                          setFocusedInput({ focusedInput })
+                        }
+                        startDate={startDate}
+                        startDateId="startDate"
+                      />
+                    )}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  className="btn btn-outline btn-sm w-24 m-6"
+                >
+                  Create
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       )}
     </div>
   );

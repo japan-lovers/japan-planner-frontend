@@ -4,25 +4,19 @@ import CardActivity from "../components/CardActivity";
 
 import { AuthContext } from "../context/auth.context";
 import userService from "../services/user.service";
-
-const category = [
-  "Museum",
-  "Outdoor",
-  "Traditional",
-  "Anime",
-  "Observation deck",
-  "Sports",
-  "Theme park",
-  "Festival",
-];
+import CreateActivity from "../components/CreateActivity";
 
 function AllActivities() {
   const { isLoggedIn, user } = useContext(AuthContext);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [byCategory, setByCategory] = useState(false);
 
   const [activities, setActivities] = useState(null);
   const [filteredActivities, setFilteredActivities] = useState([]);
   const [favouriteActivities, setFavouriteActivities] = useState([]);
   const [filterByCategory, setFilterByCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const getAllActivities = () => {
     activitiesService
@@ -48,7 +42,19 @@ function AllActivities() {
     if (isLoggedIn) {
       getFavourites();
     }
+    activitiesService
+      .getCategories()
+      .then((response) => setCategories(response.data))
+      .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    setFilteredActivities(
+      filterByCategory.length > 0
+        ? activities.filter((el) => filterByCategory.includes(el.category))
+        : activities
+    );
+  }, [filterByCategory]);
 
   const updateFavourites = (activity) => {
     let updatedActivities;
@@ -73,39 +79,68 @@ function AllActivities() {
     return setFilterByCategory((prev) => [...prev, cat]);
   };
 
-  useEffect(() => {
-    setFilteredActivities(
-      filterByCategory.length > 0
-        ? activities.filter((el) => filterByCategory.includes(el.category))
-        : activities
-    );
-  }, [filterByCategory]);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="flex justify-center">
-      <div className="max-w-7xl flex flex-col p-4 ">
-        <div className="lg:flex lg:items-center lg:justify-between ml-6 mb-10">
+      <div className="max-w-7xl flex flex-col p-4">
+        <CreateActivity
+          isOpen={isModalOpen}
+          handleCloseModal={handleCloseModal}
+          getAllActivities={getAllActivities}
+        />
+        <div className="lg:flex lg:items-center lg:justify-between mx-6 mb-10">
           <div className="min-w-0 flex-1">
-            <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-              Browse all activities
+            <h2 className="text-2xl font-bold leading-7 mb-2 text-gray-900 sm:truncate sm:tracking-tight">
+              All activities
             </h2>
-            <div className="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:space-x-6">
-              {category.map((cat) => {
-                return (
+            <div className="max-w-7xl mt-1 flex flex-col sm:flex-wrap sm:flex-wrap ">
+              <div className="flex justify-between items-end">
+                <div className="space-x-2 my-2">
                   <button
-                    type="button"
-                    className={`btn ${
-                      filterByCategory.includes(cat)
-                        ? "bg-black text-white"
-                        : "btn-outline"
+                    onClick={() => setByCategory(!byCategory)}
+                    className={`btn btn-sm ${
+                      byCategory ? "bg-black text-white" : "btn-outline"
                     } active btn-sm`}
-                    onClick={() => filterByCat(cat)}
-                    key={cat}
                   >
-                    {cat}
+                    Browse by category
                   </button>
-                );
-              })}
+                  <button className="btn btn-outline btn-sm">
+                    Browse in map
+                  </button>
+                </div>
+                <div className="flex flex-col items-end">
+                  <h3 className="text-sm">Don't see what you plan to do?</h3>
+                  <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="btn btn-outline btn-sm mt-1"
+                  >
+                    Add your activity
+                  </button>
+                </div>
+              </div>
+              {byCategory && (
+                <div className="space-x-2">
+                  {categories.map((cat) => {
+                    return (
+                      <button
+                        type="button"
+                        className={`btn ${
+                          filterByCategory.includes(cat)
+                            ? "bg-black text-white"
+                            : "btn-outline"
+                        } active btn-sm`}
+                        onClick={() => filterByCat(cat)}
+                        key={cat}
+                      >
+                        {cat}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>

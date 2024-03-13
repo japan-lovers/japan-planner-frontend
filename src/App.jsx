@@ -27,7 +27,6 @@ function App() {
         <Route path="/trips/:id" element={<TripDetails />} />
         <Route path="/activities" element={<AllActivities />} />
         <Route path="/activities/:id" element={<ActivityDetails />} />
-        <Route path="/create" element={<CreateActivity />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
