@@ -104,6 +104,7 @@ function CreateActivity() {
               />
               <label>Category:</label>
               <select
+                defaultValue={category}
                 required
                 type="text"
                 placeholder="Category"
@@ -113,7 +114,7 @@ function CreateActivity() {
                   setCategory(e.target.value);
                 }}
               >
-                <option value={category}>Select category</option>
+                <option value="">Select category</option>
                 {enumCategories.map((categ, index) => {
                   return (
                     <option key={index} value={categ}>
