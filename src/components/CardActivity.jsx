@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import userService from '../services/user.service';
+import React, { useContext, useEffect, useState } from "react";
+import userService from "../services/user.service";
 import {
   Card,
   CardHeader,
@@ -9,14 +9,13 @@ import {
   Button,
   Tooltip,
   IconButton,
-} from '@material-tailwind/react';
-import { AuthContext } from '../context/auth.context';
-import { useNavigate } from 'react-router-dom';
+} from "@material-tailwind/react";
+import { AuthContext } from "../context/auth.context";
+import { Link, useNavigate } from "react-router-dom";
 
 function CardActivity({ activity, updateFavourites }) {
   const { isLoggedIn, user } = useContext(AuthContext);
 
-  const [heartedActivities, setHeartedActivities] = useState([]);
   const [isFavourite, setIsFavourite] = useState(false);
 
   const navigate = useNavigate();
@@ -26,8 +25,6 @@ function CardActivity({ activity, updateFavourites }) {
       userService
         .getUser(user._id)
         .then((response) => {
-          setHeartedActivities(response.data.favouriteActivities);
-
           response.data.favouriteActivities.forEach((elm) => {
             if (elm._id === activity._id) {
               setIsFavourite(true);
@@ -52,77 +49,79 @@ function CardActivity({ activity, updateFavourites }) {
         .then()
         .catch((error) => console.log(error));
     } else {
-      navigate('/login');
+      navigate("/login");
     }
   };
 
   return (
-    <Card className="w-card shadow-lg">
+    <div className="w-full sm:w-45 md:w-30 lg:w-22 shadow-lg">
       <CardHeader floated={false} color="blue-gray">
-        <img
-          className="w-64 h-48 object-cover"
-          src={activity.image}
-          alt={activity.name}
-        />
-        <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
-        {/* <div className="!absolute top-2 left-2 px-1 rounded-full text-xs bg-black font-white font-semibold">
-          {activity.category}
-        </div> */}
-        {activity.free && (
-          <Typography
-            color="white"
-            className="!absolute top-2 left-2 bg-gray-900 px-2 text-xs font-semibold rounded-full"
-          >
-            FREE
-          </Typography>
-        )}
-        {isFavourite ? (
-          <IconButton
-            onClick={handleAddToFavourites}
-            size="sm"
-            color="white"
-            variant="text"
-            className="!absolute top-2 right-2 rounded-full"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="white"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <Link to={`/activities/${activity._id}`}>
+          <img
+            className="w-full h-64 md:h-48 md:w-64 object-cover"
+            src={activity.image}
+            alt={activity.name}
+          />
+        </Link>
+        <div>
+          <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
+
+          {activity.free && (
+            <Typography
+              color="white"
+              className="!absolute top-2 left-2 bg-gray-900 px-2 text-xs font-semibold rounded-full"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
-            </svg>
-          </IconButton>
-        ) : (
-          <IconButton
-            onClick={handleAddToFavourites}
-            size="sm"
-            variant="text"
-            color="white"
-            className="!absolute top-2 right-2 rounded-full"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              FREE
+            </Typography>
+          )}
+          {isFavourite ? (
+            <IconButton
+              onClick={handleAddToFavourites}
+              size="sm"
+              color="white"
+              variant="text"
+              className="!absolute top-2 right-2 rounded-full"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
-            </svg>
-          </IconButton>
-        )}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="white"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            </IconButton>
+          ) : (
+            <IconButton
+              onClick={handleAddToFavourites}
+              size="sm"
+              variant="text"
+              color="white"
+              className="!absolute top-2 right-2 rounded-full"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            </IconButton>
+          )}
+        </div>
       </CardHeader>
       <CardBody>
         <div className="flex items-center justify-between">
@@ -164,12 +163,14 @@ function CardActivity({ activity, updateFavourites }) {
           >
             {activity.category}
           </Typography>
-          <button
-            color="gray"
-            className="btn btn-xs btn-ghost text-xs font-semibold"
-          >
-            View details
-          </button>
+          <Link to={`/activities/${activity._id}`}>
+            <button
+              color="gray"
+              className="btn btn-xs btn-ghost text-sm font-semibold"
+            >
+              View details
+            </button>
+          </Link>
           {/* <Tooltip content="$129 per night">
             <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
               <svg
@@ -211,7 +212,7 @@ function CardActivity({ activity, updateFavourites }) {
           Reserve
         </Button>
       </CardFooter> */}
-    </Card>
+    </div>
   );
 }
 
