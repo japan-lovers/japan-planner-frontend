@@ -97,8 +97,8 @@ function AllActivities() {
               All activities
             </h2>
             <div className="max-w-7xl mt-1 flex flex-col sm:flex-wrap sm:flex-wrap ">
-              <div className="flex justify-between items-end">
-                <div className="space-x-2 my-2">
+              <div className="flex  items-start justify-between sm:items-end">
+                <div className="space-y-2 sm:space-x-2 my-2 flex flex-col sm:flex-row items-baseline">
                   <button
                     onClick={() => setByCategory(!byCategory)}
                     className={`btn btn-sm ${
@@ -112,35 +112,39 @@ function AllActivities() {
                   </button>
                 </div>
                 <div className="flex flex-col items-end">
-                  <h3 className="text-sm">Don't see what you plan to do?</h3>
+                  <h3 className="w-32 md:w-48 text-right text-sm">
+                    Don't see what you plan to do?
+                  </h3>
                   <button
                     onClick={() => setIsModalOpen(true)}
-                    className="btn btn-outline btn-sm mt-1"
+                    className="btn btn-outline btn-sm mt-2 sm:mt-1"
                   >
                     Add your activity
                   </button>
                 </div>
               </div>
-              {byCategory && (
-                <div className="space-x-2">
-                  {categories.map((cat) => {
-                    return (
-                      <button
-                        type="button"
-                        className={`btn ${
-                          filterByCategory.includes(cat)
-                            ? "bg-black text-white"
-                            : "btn-outline"
-                        } active btn-sm`}
-                        onClick={() => filterByCat(cat)}
-                        key={cat}
-                      >
-                        {cat}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
+              <div className="flex justify-center">
+                {byCategory && (
+                  <div className="mt-4 md:mt-3 lg:mt-1 xl:mt-0 w-11/12 lg:w-full flex flex-wrap items-baseline justify-center lg:justify-start space-y-2 space-x-2">
+                    {categories.map((cat) => {
+                      return (
+                        <button
+                          type="button"
+                          className={`btn ${
+                            filterByCategory.includes(cat)
+                              ? "bg-black text-white"
+                              : "btn-outline"
+                          } active btn-sm`}
+                          onClick={() => filterByCat(cat)}
+                          key={cat}
+                        >
+                          {cat}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

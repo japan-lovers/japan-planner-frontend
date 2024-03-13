@@ -107,7 +107,7 @@ function CreateActivity({ isOpen, handleCloseModal, getAllActivities }) {
       ) : (
         <div className="flex justify-center">
           <div className="bg-modalbg fixed w-full h-full z-40 top-0"></div>
-          <div className="fixed bg-white top-0 z-50 p-14 rounded-xl shadow-md">
+          <div className="fixed bg-white top-0 xl:top-10 2xl:top-20 z-50 p-14 rounded-xl shadow-md">
             <form onSubmit={handleCreateActivity} className="flex flex-col">
               <div className="flex justify-between items-baseline">
                 <h1 className="font-bold text-2xl mb-4">
