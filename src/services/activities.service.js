@@ -34,9 +34,9 @@ class ActivitiesService {
     return this.api.get(`/api/activities/${id}`);
   };
 
-  // GET /api/activities/categories
+  // GET /api/categories
   getCategories = () => {
-    return this.api.get(`/activities/categories`);
+    return this.api.get(`/api/categories`);
   };
 
   // PUT /api/activities/:id
