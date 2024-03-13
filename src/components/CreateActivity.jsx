@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { Autocomplete, useLoadScript } from "@react-google-maps/api";
 import activitiesService from "../services/activities.service";
 import "react-dates/initialize";
-import { DateRangePicker } from "react-dates";
+import { DateRangePicker, SingleDatePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
 
 function CreateActivity() {
   const [searchResult, setSearchResult] = useState("");
   const [enumCategories, setEnumCategories] = useState([]);
   const [focusedInput, setFocusedInput] = useState("startDate");
+  const [focus, setFocus] = useState(false);
 
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -22,6 +23,10 @@ function CreateActivity() {
   const [image, setImage] = useState("");
   const [free, setFree] = useState(null);
 
+  const [selectDates, setSelectDates] = useState(true);
+  const [selectMultipleDates, setSelectMultipleDates] = useState(false);
+  const [isRange, setIsRange] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +35,14 @@ function CreateActivity() {
       .then((response) => setEnumCategories(response.data))
       .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    setSelectDates(!selectDates);
+  }, [openAllYear]);
+
+  useEffect(() => {
+    setSelectMultipleDates(!selectMultipleDates);
+  }, [isRange]);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_API_KEY,
@@ -55,6 +68,15 @@ function CreateActivity() {
     setStartDate(startDate);
     setEndDate(endDate);
   };
+
+  const handleOnDateChange = (date) => {
+    setStartDate(date);
+    setEndDate(date);
+  };
+
+  //   const onFocusChange = ({ focused }) => {
+  //     setFocused(focused);
+  //   };
 
   const handleCreateActivity = (e) => {
     e.preventDefault();
@@ -108,7 +130,6 @@ function CreateActivity() {
                 required
                 type="text"
                 placeholder="Category"
-                value={category}
                 className="select select-sm select-bordered w-96 my-1"
                 onChange={(e) => {
                   setCategory(e.target.value);
@@ -151,6 +172,7 @@ function CreateActivity() {
                 <div className="flex">
                   <label className="flex items-center mx-1">
                     <input
+                      defaultChecked
                       type="radio"
                       value="true"
                       name="openAllYear"
@@ -234,27 +256,72 @@ function CreateActivity() {
             </div>
           </div>
 
-          {!openAllYear && (
-            <div className="flex flex-col my-1">
-              <label>Select:</label>
-              <DateRangePicker
-                endDate={endDate}
-                endDateId="endDate"
-                focusedInput={focusedInput.focusedInput}
-                isOutsideRange={() => null}
-                onDatesChange={onDatesChange}
-                onFocusChange={(focusedInput) =>
-                  setFocusedInput({ focusedInput })
-                }
-                startDate={startDate}
-                startDateId="startDate"
-              />
-            </div>
-          )}
+          <div className="flex flex-col items-center">
+            {selectDates && (
+              <div className="flex flex-col w-96 my-1">
+                <div className="flex justify-between">
+                  <label className="my-1">When is it?</label>
 
-          <button type="submit" className="btn btn-outline btn-sm w-24 mt-2">
-            Create
-          </button>
+                  <div className="flex">
+                    <label className="flex items-center mx-1">
+                      <input
+                        defaultChecked
+                        type="radio"
+                        value="false"
+                        name="isRange"
+                        className="radio radio-sm mx-1"
+                        onChange={(e) => {
+                          setIsRange(e.target.value);
+                        }}
+                      />
+                      One date
+                    </label>
+
+                    <label className="flex items-center mx-1">
+                      <input
+                        type="radio"
+                        value="true"
+                        name="isRange"
+                        className="radio radio-sm mx-1"
+                        onChange={(e) => {
+                          setIsRange(e.target.value);
+                        }}
+                      />
+                      Multiple
+                    </label>
+                  </div>
+                </div>
+                {selectMultipleDates ? (
+                  <SingleDatePicker
+                    date={startDate}
+                    onDateChange={handleOnDateChange}
+                    focused={focus}
+                    onFocusChange={({ focused }) => setFocus(focused)}
+                    numberOfMonths={1}
+                    showClearDate={true}
+                    isOutsideRange={() => false}
+                  />
+                ) : (
+                  <DateRangePicker
+                    endDate={endDate}
+                    endDateId="endDate"
+                    focusedInput={focusedInput.focusedInput}
+                    isOutsideRange={() => null}
+                    onDatesChange={onDatesChange}
+                    onFocusChange={(focusedInput) =>
+                      setFocusedInput({ focusedInput })
+                    }
+                    startDate={startDate}
+                    startDateId="startDate"
+                  />
+                )}
+              </div>
+            )}
+
+            <button type="submit" className="btn btn-outline btn-sm w-24 m-6">
+              Create
+            </button>
+          </div>
         </form>
       )}
     </div>
