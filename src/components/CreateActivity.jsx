@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Autocomplete, useLoadScript } from "@react-google-maps/api";
 import activitiesService from "../services/activities.service";
 import "react-dates/initialize";
@@ -8,18 +9,20 @@ import "react-dates/lib/css/_datepicker.css";
 function CreateActivity() {
   const [searchResult, setSearchResult] = useState("");
   const [enumCategories, setEnumCategories] = useState([]);
+  const [focusedInput, setFocusedInput] = useState("startDate");
 
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [openAllYear, setOpenAllYear] = useState(null);
+  const [openAllYear, setOpenAllYear] = useState(true);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [focusedInput, setFocusedInput] = useState("startDate");
   const [image, setImage] = useState("");
   const [free, setFree] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     activitiesService
@@ -42,8 +45,6 @@ function CreateActivity() {
       const place = searchResult.getPlace();
       const formattedAddress = place.formatted_address;
 
-      console.log(place.formatted_address);
-
       setAddress(formattedAddress);
     } else {
       alert("Please enter text");
@@ -55,7 +56,32 @@ function CreateActivity() {
     setEndDate(endDate);
   };
 
-  const handleCreateActivity = () => {};
+  const handleCreateActivity = (e) => {
+    e.preventDefault();
+
+    const requestBody = {
+      name,
+      address,
+      location,
+      description,
+      category,
+      openAllYear,
+      startDate,
+      endDate,
+      image,
+      free,
+    };
+
+    console.log(requestBody);
+
+    activitiesService
+      .createActivity(requestBody)
+      .then(
+        (response) => console.log(response.data)
+        //   navigate("/activities")
+      )
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className="flex justify-center">
@@ -87,6 +113,7 @@ function CreateActivity() {
                   setCategory(e.target.value);
                 }}
               >
+                <option value={category}>Select category</option>
                 {enumCategories.map((categ, index) => {
                   return (
                     <option key={index} value={categ}>
@@ -123,7 +150,6 @@ function CreateActivity() {
                 <div className="flex">
                   <label className="flex items-center mx-1">
                     <input
-                      defaultChecked
                       type="radio"
                       value="true"
                       name="openAllYear"
@@ -207,7 +233,7 @@ function CreateActivity() {
             </div>
           </div>
 
-          {openAllYear && (
+          {!openAllYear && (
             <div className="flex flex-col my-1">
               <label>Select:</label>
               <DateRangePicker
