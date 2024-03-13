@@ -53,7 +53,7 @@ function Navbar() {
               className="h-10"
               src="https://firebasestorage.googleapis.com/v0/b/ironhack-projects-f2422.appspot.com/o/images%2Fironlegacy.png?alt=media&token=c90a12e9-ba9b-41fa-855f-58f25e4a8270"
             /> */}
-              JAPAN TRAVEL
+              Nippon Adventure
             </span>
           </NavLink>
           <div className="navbar-start hidden lg:flex">
