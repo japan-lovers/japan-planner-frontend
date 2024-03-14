@@ -34,6 +34,11 @@ class ActivitiesService {
     return this.api.get(`/api/activities/${id}`);
   };
 
+  // PUT /api/activities/:id
+  updateActivity = (id, requestBody) => {
+    return this.api.put(`/api/activities/${id}`, requestBody);
+  };
+
   // GET /api/categories
   getCategories = () => {
     return this.api.get(`/api/categories`);
