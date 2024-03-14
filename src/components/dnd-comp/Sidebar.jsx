@@ -54,6 +54,7 @@ function Sidebar(props) {
                   key={activity._id}
                   id={activity._id}
                   isFavorite={favs?.includes(activity._id)}
+                  width="w-full"
                 />
               );
             })}

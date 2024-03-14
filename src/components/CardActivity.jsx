@@ -13,7 +13,7 @@ import {
 import { AuthContext } from "../context/auth.context";
 import { Link, useNavigate } from "react-router-dom";
 
-function CardActivity({ activity, updateFavourites }) {
+function CardActivity({ activity, updateFavourites, width }) {
   const { isLoggedIn, user } = useContext(AuthContext);
 
   const [isFavourite, setIsFavourite] = useState(false);
@@ -54,7 +54,7 @@ function CardActivity({ activity, updateFavourites }) {
   };
 
   return (
-    <div className="w-full sm:w-45 md:w-30 lg:w-22 shadow-lg">
+    <div className={`${width} shadow-lg`}>
       <CardHeader floated={false} color="blue-gray">
         <Link to={`/activities/${activity._id}`}>
           <img

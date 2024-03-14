@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import React, { useState } from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-import DndDraggableCard from './DndDraggableCard';
-import CardActivity from '../CardActivity';
-import { useRef } from 'react';
+import DndDraggableCard from "./DndDraggableCard";
+import CardActivity from "../CardActivity";
+import { useRef } from "react";
 
 function DndCardActivity({ isFavorite, data, id }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -44,7 +44,7 @@ function DndCardActivity({ isFavorite, data, id }) {
       onMouseLeave={handleMouseLeave}
     >
       {isHovered ? (
-        <CardActivity activity={data} key={data._id} />
+        <CardActivity activity={data} key={data._id} width="w-full" />
       ) : (
         <DndDraggableCard name={data?.name} id={id} isFav={isFavorite} />
       )}
