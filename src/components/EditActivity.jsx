@@ -103,9 +103,7 @@ function EditActivity({ id, isOpen, handleCloseModal, getActivityById }) {
             <div className="fixed bg-white top-0 xl:top-10 2xl:top-20 z-50 p-14 rounded-xl shadow-md">
               <form onSubmit={handleEditActivity} className="flex flex-col">
                 <div className="flex justify-between items-baseline">
-                  <h1 className="font-bold text-2xl mb-4">
-                    Create your own activity:
-                  </h1>
+                  <h1 className="font-bold text-2xl mb-4">Edit activity:</h1>
                   <button
                     onClick={handleCloseModal}
                     className="btn btn-circle btn-ghost"

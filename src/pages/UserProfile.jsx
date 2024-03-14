@@ -111,17 +111,17 @@ function UserProfilePage() {
       {userDb === null ? (
         <span className="loading loading-ring loading-lg mt-48"></span>
       ) : (
-        <div className="flex flex-col mx-6 max-w-7xl">
-          <div className="flex justify-between">
-            <div className="flex flex-col items-center w-profile">
-              <div className="flex w-profile justify-between ">
-                <div className="flex items-center">
+        <div className="flex flex-col w-full mx-6 max-w-7xl">
+          <div className="mt-5 flex flex-col lg:flex-row justify-between">
+            <div className="w-full flex flex-col items-center lg:w-2/4">
+              <div className="flex w-full lg:w-11/12 justify-between ">
+                <div className="flex items-start lg:items-center">
                   <img
-                    className="rounded-full w-32 h-32 border-4 border-white shadow"
+                    className="rounded-full w-24 h-24 md:w-32 md:h-32 border-4 border-white shadow"
                     src={userDb.profilePic}
                     alt=""
                   />
-                  <div className="m-6">
+                  <div className="m-6 ">
                     <h1 className="font-bold text-2xl">{userDb.username}</h1>
                     {editable ? (
                       nationalities.length > 0 && (
@@ -146,7 +146,7 @@ function UserProfilePage() {
                     )}
                   </div>
                 </div>
-                <div>
+                <div className="space-y-2 md:space-y-0 flex flex-col items-end md:flex-row md:items-start">
                   {editable ? (
                     <button
                       onClick={updateHandler}
@@ -175,7 +175,7 @@ function UserProfilePage() {
               {editable ? (
                 <form ref={formRef} className="w-full">
                   <textarea
-                    className="textarea textarea-bordered w-11/12 h-40 m-6"
+                    className="textarea textarea-bordered w-11/12 my-4 mx-6"
                     type="text"
                     value={intro}
                     onChange={(e) => setIntro(e.target.value)}
@@ -184,11 +184,11 @@ function UserProfilePage() {
                   </textarea>
                 </form>
               ) : (
-                <div className="textarea w-11/12 h-36 m-6">{intro}</div>
+                <div className="textarea w-11/12 h-20 my-4 mx-6">{intro}</div>
               )}
             </div>
 
-            <div className="w-profile mx-4">
+            <div className="w-full lg:w-2/4">
               <h1 className="font-bold text-2xl">My trips:</h1>
               {userTrips === null ? (
                 <span className="loading loading-ring loading-lg mt-20 ml-60"></span>
@@ -197,7 +197,7 @@ function UserProfilePage() {
                   {userTrips.map((trip) => {
                     return (
                       <Link key={trip._id} to={`/trips/${trip._id}`}>
-                        <div className="h-16 w-full bg-neutral-100 rounded-md flex justify-between items-center my-4 p-4">
+                        <div className="h-16 w-full shadow-md rounded-md flex justify-between items-center my-4 p-4">
                           <h3 className="font-semibold text-md">{trip.name}</h3>
                           <p>{trip.destinations[0]}</p>
                           <p>
@@ -220,21 +220,24 @@ function UserProfilePage() {
               )}
             </div>
           </div>
-          <div>
-            <h1 className="font-bold text-2xl">My favourites:</h1>
+          <div className="max-w-7xl">
+            <h1 className="lg:mx-10 mt-5 lg:mt-0 font-bold text-2xl">
+              My favourites:
+            </h1>
+
+            {favouriteActivities && (
+              <div className="flex flex-wrap justify-center">
+                {favouriteActivities.map((activity) => (
+                  <CardActivity
+                    activity={activity}
+                    key={activity._id}
+                    updateFavourites={updateFavourites}
+                    width="w-full sm:w-45 md:w-30 lg:w-22"
+                  />
+                ))}
+              </div>
+            )}
           </div>
-          {favouriteActivities && (
-            <div className="flex flex-wrap">
-              {favouriteActivities.map((activity) => (
-                <CardActivity
-                  activity={activity}
-                  key={activity._id}
-                  updateFavourites={updateFavourites}
-                  width="w-full sm:w-45 md:w-30 lg:w-22"
-                />
-              ))}
-            </div>
-          )}
         </div>
       )}
     </div>
