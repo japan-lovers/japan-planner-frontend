@@ -9,8 +9,8 @@ module.exports = withMT({
       spacing: {
         tripform: "900px",
         profile: "600px",
-        minusminus: "-200px",
-        minus: "-150px",
+        minusminus: "-180px",
+        minus: "-130px",
         minus50: "-50px",
         minus40: "-40px",
         card: "290px",
@@ -24,6 +24,9 @@ module.exports = withMT({
     },
     colors: {
       modalbg: "rgba(0, 0, 0, 0.5)",
+    },
+    backgroundImage: {
+      home: "url('/public/japan.jpg')",
     },
   },
   plugins: [require("daisyui")],
