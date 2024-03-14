@@ -174,7 +174,14 @@ function AllActivities() {
           </div>
         ) : (
           <div className="flex justify-center flex-wrap gap-6 ">
-            <Map />
+            <Map
+              activities={filteredActivities}
+              zoomStart={6}
+              center={{
+                lat: 36.0,
+                lng: 138.0,
+              }}
+            />
           </div>
         )}
       </div>

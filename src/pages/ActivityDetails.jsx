@@ -1,8 +1,9 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import activitiesService from "../services/activities.service";
-import { useContext, useEffect, useState } from "react";
-import EditActivity from "../components/EditActivity";
-import { AuthContext } from "../context/auth.context";
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import activitiesService from '../services/activities.service';
+import { useContext, useEffect, useState } from 'react';
+import EditActivity from '../components/EditActivity';
+import { AuthContext } from '../context/auth.context';
+import Map from '../components/Map';
 
 function ActivityDetails() {
   const { id } = useParams();
@@ -15,6 +16,7 @@ function ActivityDetails() {
   const [position, setPosition] = useState(null);
   const [activities, setActivities] = useState(null);
   const [length, setLength] = useState(null);
+  const [mapActivity, setMapActivity] = useState([]);
 
   const navigate = useNavigate();
 
@@ -23,6 +25,7 @@ function ActivityDetails() {
       .getActivity(id)
       .then((response) => {
         setActivity(response.data);
+        setMapActivity((prev) => [...prev, response.data]);
         response.data.startDate === response.data.endDate && setOneDate(true);
       })
       .catch((error) => console.log(error));
@@ -46,18 +49,18 @@ function ActivityDetails() {
   }, [position]);
 
   const month = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
 
   const handleCloseModal = () => {
@@ -75,9 +78,9 @@ function ActivityDetails() {
     setPosition(position + 1);
     navigate(`/activities/${activityId}`);
   };
-
+  console.log(activity?.geometry);
   return (
-    <div className="flex justify-center w-full">
+    <div className="flex  justify-center w-full">
       {activity === null ? (
         <span className="loading loading-ring loading-lg mt-48"></span>
       ) : (
@@ -105,14 +108,14 @@ function ActivityDetails() {
                     strokeLinejoin="round"
                   ></g>
                   <g id="SVGRepo_iconCarrier">
-                    {" "}
+                    {' '}
                     <path
                       d="M14 7L9 12L14 17"
                       stroke="#000000"
                       strokeWidth="2.4"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                    ></path>{" "}
+                    ></path>{' '}
                   </g>
                 </svg>
                 {position !== 0 && (
@@ -147,14 +150,14 @@ function ActivityDetails() {
                     strokeLinejoin="round"
                   ></g>
                   <g id="SVGRepo_iconCarrier">
-                    {" "}
+                    {' '}
                     <path
                       d="M10 17L15 12L10 7"
                       stroke="#000000"
                       strokeWidth="2.4"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                    ></path>{" "}
+                    ></path>{' '}
                   </g>
                 </svg>
               </div>
@@ -206,14 +209,14 @@ function ActivityDetails() {
                       </div>
                     ) : oneDate ? (
                       <div className="my-2 font-light text-md">
-                        {month[new Date(activity.startDate).getMonth()]}{" "}
+                        {month[new Date(activity.startDate).getMonth()]}{' '}
                         {new Date(activity.startDate).getDate()}th
                       </div>
                     ) : (
                       <div className="my-2 font-light text-md">
-                        {month[new Date(activity.startDate).getMonth()]}{" "}
-                        {new Date(activity.startDate).getDate()}th to{" "}
-                        {month[new Date(activity.endDate).getMonth()]}{" "}
+                        {month[new Date(activity.startDate).getMonth()]}{' '}
+                        {new Date(activity.startDate).getDate()}th to{' '}
+                        {month[new Date(activity.endDate).getMonth()]}{' '}
                         {new Date(activity.endDate).getDate()}th
                       </div>
                     )}
@@ -244,6 +247,15 @@ function ActivityDetails() {
                   </Link>
                 </div>
               </div>
+            </div>
+            <div className="flex justify-center align-center mt-12">
+              {activity && (
+                <Map
+                  activities={mapActivity}
+                  zoomStart={10}
+                  center={activity.geometry}
+                />
+              )}
             </div>
           </div>
         </div>
