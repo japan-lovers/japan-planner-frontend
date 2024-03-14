@@ -5,12 +5,8 @@ function Homepage() {
   return (
     <div className="flex justify-center">
       <div className="w-full flex flex-col items-center relative max-w-7xl">
-        <div className="rounded-xl w-11/12 h-full py-48 flex-grow flex bg-home bg-center bg-no-repeat bg-cover bg-opacity-20 bg-neutral-50"></div>
-        {/* <img
-          src={introImg}
-          className="mt-4 w-11/12 object-cover bg-gradient rounded-xl"
-          alt="fuji-san in the fall"
-        /> */}
+        <div className="mt-4 rounded-xl w-11/12 h-full py-48 flex-grow flex bg-home bg-center bg-no-repeat bg-cover bg-opacity-20 bg-neutral-50"></div>
+
         <h1 className="mx-20 text-center absolute font-semibold text-white text-3xl inset-y-32 sm:inset-y-40 md:text-4xl">
           Plan your next trip to Japan!
         </h1>
