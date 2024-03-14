@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Autocomplete, useLoadScript } from "@react-google-maps/api";
 import activitiesService from "../services/activities.service";
 import "react-dates/initialize";
@@ -23,6 +23,7 @@ function CreateActivity({ isOpen, handleCloseModal, getAllActivities }) {
   const [endDate, setEndDate] = useState(null);
   const [image, setImage] = useState("");
   const [free, setFree] = useState(null);
+  const [geometry, setGeometry] = useState(null);
 
   const [selectDates, setSelectDates] = useState(true);
   const [selectMultipleDates, setSelectMultipleDates] = useState(false);
@@ -55,9 +56,11 @@ function CreateActivity({ isOpen, handleCloseModal, getAllActivities }) {
   const onPlaceChanged = () => {
     if (searchResult != null) {
       const place = searchResult.getPlace();
+      const latLong = place.geometry.location;
       const formattedAddress = place.formatted_address;
 
       setAddress(formattedAddress);
+      setGeometry(latLong);
     } else {
       alert("Please enter text");
     }
@@ -87,9 +90,8 @@ function CreateActivity({ isOpen, handleCloseModal, getAllActivities }) {
       endDate,
       image,
       free,
+      geometry,
     };
-
-    console.log(requestBody);
 
     activitiesService
       .createActivity(requestBody)
