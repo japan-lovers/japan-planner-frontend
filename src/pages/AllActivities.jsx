@@ -91,7 +91,7 @@ function AllActivities() {
           handleCloseModal={handleCloseModal}
           getAllActivities={getAllActivities}
         />
-        <div className="lg:flex lg:items-center lg:justify-between mx-6 mb-10">
+        <div className="lg:flex lg:items-center lg:justify-between mx-2 mb-10">
           <div className="min-w-0 flex-1">
             <h2 className="text-2xl font-bold leading-7 mb-2 text-gray-900 sm:truncate sm:tracking-tight">
               All activities
