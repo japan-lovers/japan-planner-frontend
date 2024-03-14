@@ -5,7 +5,7 @@ import activitiesService from "../services/activities.service";
 function EditActivity({ id, isOpen, handleCloseModal, getActivityById }) {
   if (!isOpen) return null;
 
-  const [searchResult, setSearchResult] = useState("");
+  const [searchResult, setSearchResult] = useState(null);
 
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -49,17 +49,21 @@ function EditActivity({ id, isOpen, handleCloseModal, getActivityById }) {
   const onPlaceChanged = () => {
     if (searchResult != null) {
       const place = searchResult.getPlace();
-      const latLong = place.geometry.location;
-      const formattedAddress = place.formatted_address;
 
-      setAddress(formattedAddress);
-      setGeometry(latLong);
+      if (place.formattedAddress != address) {
+        console.log("Not equal");
+        const latLong = place.geometry.location;
+        const formattedAddress = place.formatted_address;
+
+        setAddress(formattedAddress);
+        setGeometry(latLong);
+      }
     } else {
       alert("Please enter text");
     }
   };
 
-  const handleEditActivity = () => {
+  const handleEditActivity = (event) => {
     event.preventDefault();
     event.stopPropagation();
 

@@ -1,7 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 import activitiesService from "../services/activities.service";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import EditActivity from "../components/EditActivity";
+import { AuthContext } from "../context/auth.context";
 
 function ActivityDetails() {
   const { id } = useParams();
