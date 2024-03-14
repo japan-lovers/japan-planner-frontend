@@ -197,7 +197,7 @@ function UserProfilePage() {
                   {userTrips.map((trip) => {
                     return (
                       <Link key={trip._id} to={`/trips/${trip._id}`}>
-                        <div className="h-16 w-full shadow-md rounded-md flex justify-between items-center my-4 p-4">
+                        <div className="h-16 w-full ring-gray-200 shadow-md rounded-md flex justify-between items-center my-4 p-4">
                           <h3 className="font-semibold text-md">{trip.name}</h3>
                           <p>{trip.destinations[0]}</p>
                           <p>

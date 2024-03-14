@@ -35,6 +35,7 @@ export default function AppDndTest({ id }) {
   const [name, setName] = useState();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  const [destionations, setDestionations] = useState();
 
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ export default function AppDndTest({ id }) {
         setName(response.data.name);
         setStartDate(response.data.startDate);
         setEndDate(response.data.endDate);
+        setDestionations(response.data.destinations);
         const { activities, ...theTrip } = response.data;
         const dates = displayDaysBetweenDates(
           theTrip.startDate,
@@ -85,8 +87,8 @@ export default function AppDndTest({ id }) {
     activitiesService
       .getAllActivities()
       .then((response) => {
-        console.log("FavActivities", response.data);
-        console.log("do I have", activities);
+        // console.log("FavActivities", response.data);
+        // console.log("do I have", activities);
 
         setItems((prevs) => ({
           ...prevs,
@@ -111,11 +113,12 @@ export default function AppDndTest({ id }) {
     event.preventDefault();
     event.stopPropagation();
 
-    const requestBody = { name };
+    const requestBody = { name, destionations };
+    console.log(requestBody);
 
     tripsService
       .updateTrip(id, requestBody)
-      .then()
+      .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
 
     setEditable(!editable);
@@ -131,7 +134,7 @@ export default function AppDndTest({ id }) {
       .catch((error) => console.log(error));
   };
 
-  console.log("favs", favs);
+  // console.log("favs", favs);
   //  ----- Function to know how many days the trip is ---------------
   // function datesDiff(date1, date2) {
   //   date1 = new Date(date1);
@@ -252,11 +255,38 @@ export default function AppDndTest({ id }) {
                 ) : (
                   <h1 className="font-bold text-2xl">{name}</h1>
                 )}
-                <p className="mt-1 font-thin text-sm">
-                  {startDate} - {endDate}
-                  {/* {trip && datesDiff(trip.startDate, trip.endDate)} days of
+                {editable ? (
+                  <input
+                    type="text"
+                    name=""
+                    id=""
+                    className="input input-bordered input-xs"
+                  />
+                ) : (
+                  <p className="mt-1 font-thin text-sm">
+                    {new Date(startDate).getDate()}/
+                    {new Date(startDate).getMonth() + 1}/
+                    {new Date(startDate).getFullYear()} to{" "}
+                    {new Date(endDate).getDate()}/
+                    {new Date(endDate).getMonth() + 1}/
+                    {new Date(endDate).getFullYear()}
+                    {/* {trip && datesDiff(trip.startDate, trip.endDate)} days of
                   travel, I am going to {trip?.destinations.map((dest) => dest)} */}
-                </p>
+                  </p>
+                )}
+                {editable ? (
+                  <input
+                    type="text"
+                    value={destionations}
+                    placeholder={destionations}
+                    onChange={(e) => setDestionations(e.target.value)}
+                    className="input input-bordered input-xs text-sm"
+                  />
+                ) : (
+                  <p className="mt-1 font-thin text-sm">
+                    {trip?.destinations.map((dest) => dest)}
+                  </p>
+                )}
               </div>
               <div>
                 {editable ? (
@@ -424,8 +454,8 @@ export default function AppDndTest({ id }) {
         ),
       }));
     }
-    console.log("ACTIVE ID", activeId);
-    console.log("OVERCONTAINER", overContainer);
+    // console.log("ACTIVE ID", activeId);
+    // console.log("OVERCONTAINER", overContainer);
 
     const newActiv = createNewActivities(activities, activeId, overContainer);
     setActivities(newActiv);
