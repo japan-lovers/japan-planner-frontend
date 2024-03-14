@@ -1,10 +1,11 @@
-import { useState, useEffect, useContext } from "react";
-import activitiesService from "../services/activities.service";
-import CardActivity from "../components/CardActivity";
+import { useState, useEffect, useContext } from 'react';
+import activitiesService from '../services/activities.service';
+import CardActivity from '../components/CardActivity';
 
-import { AuthContext } from "../context/auth.context";
-import userService from "../services/user.service";
-import CreateActivity from "../components/CreateActivity";
+import { AuthContext } from '../context/auth.context';
+import userService from '../services/user.service';
+import CreateActivity from '../components/CreateActivity';
+import Map from '../components/Map';
 
 function AllActivities() {
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -17,6 +18,7 @@ function AllActivities() {
   const [favouriteActivities, setFavouriteActivities] = useState([]);
   const [filterByCategory, setFilterByCategory] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [mapView, setMapView] = useState(false);
 
   const getAllActivities = () => {
     activitiesService
@@ -102,12 +104,15 @@ function AllActivities() {
                   <button
                     onClick={() => setByCategory(!byCategory)}
                     className={`btn btn-sm ${
-                      byCategory ? "bg-black text-white" : "btn-outline"
+                      byCategory ? 'bg-black text-white' : 'btn-outline'
                     } active btn-sm`}
                   >
                     Browse by category
                   </button>
-                  <button className="btn btn-outline btn-sm">
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => setMapView(!mapView)}
+                  >
                     Browse in map
                   </button>
                 </div>
@@ -132,8 +137,8 @@ function AllActivities() {
                           type="button"
                           className={`btn ${
                             filterByCategory.includes(cat)
-                              ? "bg-black text-white"
-                              : "btn-outline"
+                              ? 'bg-black text-white'
+                              : 'btn-outline'
                           } active btn-sm`}
                           onClick={() => filterByCat(cat)}
                           key={cat}
@@ -148,22 +153,30 @@ function AllActivities() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center flex-wrap gap-6 ">
-          {activities === null ? (
-            <span className="loading loading-ring loading-lg mt-48"></span>
-          ) : activities.length === 0 ? (
-            <div className="font-thin text-sm m-4">No activities available</div>
-          ) : (
-            filteredActivities.map((activity) => (
-              <CardActivity
-                activity={activity}
-                key={activity._id}
-                updateFavourites={updateFavourites}
-                width="w-full sm:w-45 md:w-30 lg:w-22"
-              />
-            ))
-          )}
-        </div>
+        {!mapView ? (
+          <div className="flex justify-center flex-wrap gap-6 ">
+            {activities === null ? (
+              <span className="loading loading-ring loading-lg mt-48"></span>
+            ) : activities.length === 0 ? (
+              <div className="font-thin text-sm m-4">
+                No activities available
+              </div>
+            ) : (
+              filteredActivities.map((activity) => (
+                <CardActivity
+                  activity={activity}
+                  key={activity._id}
+                  updateFavourites={updateFavourites}
+                  width="w-full sm:w-45 md:w-30 lg:w-22"
+                />
+              ))
+            )}
+          </div>
+        ) : (
+          <div className="flex justify-center flex-wrap gap-6 ">
+            <Map />
+          </div>
+        )}
       </div>
     </div>
   );
