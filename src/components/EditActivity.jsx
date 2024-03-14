@@ -51,7 +51,6 @@ function EditActivity({ id, isOpen, handleCloseModal, getActivityById }) {
       const place = searchResult.getPlace();
 
       if (place.formattedAddress != address) {
-        console.log("Not equal");
         const latLong = place.geometry.location;
         const formattedAddress = place.formatted_address;
 

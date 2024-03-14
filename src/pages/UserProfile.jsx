@@ -225,9 +225,13 @@ function UserProfilePage() {
               My favourites:
             </h1>
 
-            {favouriteActivities && (
+            {favouriteActivities.length === 0 ? (
+              <div className="flex justify-center my-10 font-thin text-sm">
+                You don't have any activities added to favourites
+              </div>
+            ) : (
               <div className="flex flex-wrap justify-center">
-                {favouriteActivities.map((activity) => (
+                {favouriteActivities.map((activity, index) => (
                   <CardActivity
                     activity={activity}
                     key={activity._id}
