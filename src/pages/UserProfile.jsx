@@ -51,6 +51,7 @@ function UserProfilePage() {
       })
       .catch((error) => console.log(error));
   };
+
   useEffect(() => {
     getUser();
     getUserTrips();
@@ -196,11 +197,16 @@ function UserProfilePage() {
                   {userTrips.map((trip) => {
                     return (
                       <Link key={trip._id} to={`/trips/${trip._id}`}>
-                        <div className="h-16 w-full bg-neutral-100 rounded-md flex items-center my-4 p-4">
-                          <h3 className="font-semibold text-sm">{trip.name}</h3>
-                          <p>First stop: {trip.destinations[0]}</p>
+                        <div className="h-16 w-full bg-neutral-100 rounded-md flex justify-between items-center my-4 p-4">
+                          <h3 className="font-semibold text-md">{trip.name}</h3>
+                          <p>{trip.destinations[0]}</p>
                           <p>
-                            From {trip.startDate} to {trip.endDate}
+                            From {new Date(trip.startDate).getDate()}/
+                            {new Date(trip.startDate).getMonth() + 1}/
+                            {new Date(trip.startDate).getFullYear()} to{" "}
+                            {new Date(trip.endDate).getDate()}/
+                            {new Date(trip.endDate).getMonth() + 1}/
+                            {new Date(trip.endDate).getFullYear()}
                           </p>
                         </div>
                       </Link>

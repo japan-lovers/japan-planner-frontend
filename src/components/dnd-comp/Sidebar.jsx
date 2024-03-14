@@ -1,11 +1,11 @@
-import { Card, Typography } from '@material-tailwind/react';
-import { useDroppable } from '@dnd-kit/core';
+import { Card, Typography } from "@material-tailwind/react";
+import { useDroppable } from "@dnd-kit/core";
 
 import {
   SortableContext,
   verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import DndCardActivity from './DndCardActivity';
+} from "@dnd-kit/sortable";
+import DndCardActivity from "./DndCardActivity";
 
 function Sidebar(props) {
   const { id, items, favs } = props;
@@ -28,7 +28,7 @@ function Sidebar(props) {
     <Card className="h-[calc(100vh-5rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 p-4">
         <Typography variant="h5" color="blue-gray">
-          Sidebar
+          Select activities:
         </Typography>
       </div>
       {/* column activities Container  */}

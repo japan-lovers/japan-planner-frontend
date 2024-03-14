@@ -35,7 +35,9 @@ function ActivityDetails() {
           </div>
           <div className="mx-4 w-profile">
             <h1 className="font-bold text-2xl">{activity.name}</h1>
-            <h2 className="my-2  text-md">{activity.location}</h2>
+            <div className="flex">
+              <h2 className="my-2  text-md">{activity.location}</h2>
+            </div>
             <div className="my-5 font-light text-sm">
               {activity.description}
             </div>

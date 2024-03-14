@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -7,19 +7,19 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-} from '@dnd-kit/core';
-import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+} from "@dnd-kit/core";
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
-import { useEffect } from 'react';
-import { AuthContext } from '../../context/auth.context';
-import tripsService from '../../services/trip.service';
-import activitiesService from '../../services/activities.service';
-import userService from '../../services/user.service';
-import DndDraggableCard from './DndDraggableCard';
-import DayInCalendar from './DayInCalendar';
-import Sidebar from './Sidebar';
-import { useNavigate } from 'react-router-dom';
-import DeleteModal from './DeleteModal';
+import { useEffect } from "react";
+import { AuthContext } from "../../context/auth.context";
+import tripsService from "../../services/trip.service";
+import activitiesService from "../../services/activities.service";
+import userService from "../../services/user.service";
+import DndDraggableCard from "./DndDraggableCard";
+import DayInCalendar from "./DayInCalendar";
+import Sidebar from "./Sidebar";
+import { useNavigate } from "react-router-dom";
+import DeleteModal from "./DeleteModal";
 
 export default function AppDndTest({ id }) {
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -30,6 +30,11 @@ export default function AppDndTest({ id }) {
   const [activeData, setActiveData] = useState();
   const [activities, setActivities] = useState();
   const [favs, setFavs] = useState();
+  const [editable, setEditable] = useState(false);
+
+  const [name, setName] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -46,6 +51,9 @@ export default function AppDndTest({ id }) {
     tripsService
       .getTrip(id)
       .then((response) => {
+        setName(response.data.name);
+        setStartDate(response.data.startDate);
+        setEndDate(response.data.endDate);
         const { activities, ...theTrip } = response.data;
         const dates = displayDaysBetweenDates(
           theTrip.startDate,
@@ -68,7 +76,7 @@ export default function AppDndTest({ id }) {
     tripsService
       .updateTrip(id, requestBody)
       .then((response) => {
-        console.log('successful change of the for');
+        console.log("successful change of the for");
       })
       .catch((error) => console.log(error));
   };
@@ -77,8 +85,8 @@ export default function AppDndTest({ id }) {
     activitiesService
       .getAllActivities()
       .then((response) => {
-        console.log('FavActivities', response.data);
-        console.log('do I have', activities);
+        console.log("FavActivities", response.data);
+        console.log("do I have", activities);
 
         setItems((prevs) => ({
           ...prevs,
@@ -96,8 +104,21 @@ export default function AppDndTest({ id }) {
   const handleDelete = () => {
     tripsService
       .deleteTrip(id)
-      .then(() => navigate('/trips'))
+      .then(() => navigate("/trips"))
       .catch((error) => console.log(error));
+  };
+  const updateHandler = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const requestBody = { name };
+
+    tripsService
+      .updateTrip(id, requestBody)
+      .then()
+      .catch((error) => console.log(error));
+
+    setEditable(!editable);
   };
 
   // ----- GET THE FAVOURITES IDS ----
@@ -110,20 +131,20 @@ export default function AppDndTest({ id }) {
       .catch((error) => console.log(error));
   };
 
-  console.log('favs', favs);
+  console.log("favs", favs);
   //  ----- Function to know how many days the trip is ---------------
-  function datesDiff(date1, date2) {
-    date1 = new Date(date1);
-    date2 = new Date(date2);
+  // function datesDiff(date1, date2) {
+  //   date1 = new Date(date1);
+  //   date2 = new Date(date2);
 
-    const differenceInMillisecondes = Math.abs(date2 - date1);
+  //   const differenceInMillisecondes = Math.abs(date2 - date1);
 
-    const differenceInDays = Math.ceil(
-      differenceInMillisecondes / (1000 * 60 * 60 * 24)
-    );
+  //   const differenceInDays = Math.ceil(
+  //     differenceInMillisecondes / (1000 * 60 * 60 * 24)
+  //   );
 
-    return differenceInDays;
-  }
+  //   return differenceInDays;
+  // }
 
   //  ----- Function to Display the days of my trip ---------------
   function displayDaysBetweenDates(date1, date2) {
@@ -150,7 +171,7 @@ export default function AppDndTest({ id }) {
   const createNewActivities = (activities, activeId, overContainer) => {
     const newActivities = [...activities];
     //CHECK IF WE MOVE IT IN THE SIDEBAR AND DELETE IT FROM ACTIVITIES
-    if (overContainer === 'favActivities') {
+    if (overContainer === "favActivities") {
       return newActivities.filter(
         (activity) => activity.activity._id !== activeId
       );
@@ -204,10 +225,10 @@ export default function AppDndTest({ id }) {
           onDragEnd={handleDragEnd}
         >
           <div className="basis-1/4">
-            {' '}
+            {" "}
             {Object.keys(itemsState).map(
               (key) =>
-                key === 'favActivities' && (
+                key === "favActivities" && (
                   <Sidebar
                     id="favActivities"
                     items={items.favActivities}
@@ -218,32 +239,57 @@ export default function AppDndTest({ id }) {
             )}
           </div>
           <div className="flex flex-col basis-3/4">
-            <div className="flex w-tripform justify-between">
+            <div className="flex w-10/12 justify-between">
               <div className="ml-2 flex flex-col">
-                <h1 className="text-2xl ">{trip?.name}</h1>
-                <p className="ml-2 italic">
-                  {' '}
-                  {trip && datesDiff(trip.startDate, trip.endDate)} days of
-                  travel, I am going to {trip?.destinations.map((dest) => dest)}
+                {editable ? (
+                  <input
+                    type="text"
+                    value={name}
+                    placeholder={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="input input-bordered input-sm font-bold text-2xl"
+                  />
+                ) : (
+                  <h1 className="font-bold text-2xl">{name}</h1>
+                )}
+                <p className="mt-1 font-thin text-sm">
+                  {startDate} - {endDate}
+                  {/* {trip && datesDiff(trip.startDate, trip.endDate)} days of
+                  travel, I am going to {trip?.destinations.map((dest) => dest)} */}
                 </p>
               </div>
-              <button
-                // onClick={changeEditable}
-                className="btn btn-outline btn-xs mx-2"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => setOpen(true)}
-                className="btn btn-outline btn-xs mx-2"
-              >
-                Delete
-              </button>
+              <div>
+                {editable ? (
+                  <button
+                    onClick={updateHandler}
+                    className="btn btn-outline btn-xs mx-2"
+                  >
+                    Update
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      if (!editable) {
+                        setEditable(!editable);
+                      }
+                    }}
+                    className="btn btn-outline btn-xs mx-2"
+                  >
+                    Edit
+                  </button>
+                )}
+                <button
+                  onClick={() => setOpen(true)}
+                  className="btn btn-outline btn-xs mx-2"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
             <div className="flex flex-wrap basis-3/4">
               {Object.keys(itemsState).map(
                 (key) =>
-                  key !== 'favActivities' && (
+                  key !== "favActivities" && (
                     <DayInCalendar
                       id={key}
                       items={items[key]}
@@ -378,8 +424,8 @@ export default function AppDndTest({ id }) {
         ),
       }));
     }
-    console.log('ACTIVE ID', activeId);
-    console.log('OVERCONTAINER', overContainer);
+    console.log("ACTIVE ID", activeId);
+    console.log("OVERCONTAINER", overContainer);
 
     const newActiv = createNewActivities(activities, activeId, overContainer);
     setActivities(newActiv);
