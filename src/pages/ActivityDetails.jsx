@@ -88,7 +88,7 @@ function ActivityDetails() {
             handleCloseModal={handleCloseModal}
             getActivityById={getActivityById}
           />
-          <div className="flex flex-col max-w-7xl p-4 shadow-lg rounded-xl">
+          <div className="flex flex-col max-w-7xl p-4 shadow-lg ring-gray-200 rounded-xl">
             <div className="flex justify-between mx-8">
               <div className="flex items-center">
                 <svg

@@ -9,8 +9,8 @@ function AllTrips() {
     tripsService
       .getAllTrips()
       .then((response) => {
-        console.log(response);
         setTrips(response.data);
+        console.log(response.data);
       })
       .catch((error) => console.log(error));
   };
@@ -18,19 +18,6 @@ function AllTrips() {
   useEffect(() => {
     getAllTrips();
   }, []);
-
-  function datesDiff(date1, date2) {
-    date1 = new Date(date1);
-    date2 = new Date(date2);
-
-    const differenceInMillisecondes = Math.abs(date2 - date1);
-
-    const differenceInDays = Math.ceil(
-      differenceInMillisecondes / (1000 * 60 * 60 * 24)
-    );
-
-    return differenceInDays;
-  }
 
   return (
     <div className="flex justify-center ">
