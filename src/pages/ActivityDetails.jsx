@@ -1,11 +1,12 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import activitiesService from "../services/activities.service";
 import { useEffect, useState } from "react";
-import { IconButton } from "@material-tailwind/react";
 import EditActivity from "../components/EditActivity";
 
 function ActivityDetails() {
   const { id } = useParams();
+
+  const { isLoggedIn } = useContext(AuthContext);
 
   const [activity, setActivity] = useState(null);
   const [oneDate, setOneDate] = useState(false);
@@ -64,7 +65,7 @@ function ActivityDetails() {
                 alt={activity.name}
               />
             </div>
-            <div className="mt-5 md:mt-0 w-full md:mx-4 md:w-2/4">
+            <div className="mt-5 md:ml-6 md:mt-0 w-full md:mx-4 md:w-2/4">
               <h1 className="font-bold text-2xl">{activity.name}</h1>
               <div className="m-2 flex flex-col items-start">
                 <div className="w-11/12 flex items-center justify-between md:items-baseline md:flex-col lg:flex-row md:justify-between lg:items-center">
@@ -124,12 +125,19 @@ function ActivityDetails() {
                 {activity.description}
               </div>
               <div className="mt-8 flex justify-center">
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="btn btn-outline btn-sm"
-                >
-                  Edit activity
-                </button>
+                {isLoggedIn && (
+                  <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="btn btn-outline btn-sm mx-2"
+                  >
+                    Edit activity
+                  </button>
+                )}
+                <Link to="/activities">
+                  <button className="btn btn-outline btn-sm mx-2">
+                    Back to activities
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

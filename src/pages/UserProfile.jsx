@@ -230,6 +230,7 @@ function UserProfilePage() {
                   activity={activity}
                   key={activity._id}
                   updateFavourites={updateFavourites}
+                  width="w-full sm:w-45 md:w-30 lg:w-22"
                 />
               ))}
             </div>
