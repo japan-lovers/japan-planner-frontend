@@ -211,7 +211,7 @@ export default function AppDndTest({ id }) {
 
   return (
     <>
-      {isLoggedIn && isYours(trip?.userId, user._id) ? (
+      {isLoggedIn && isYours(trip?.userId._id, user._id) ? (
         <div className="flex flex-col">
           <div className="flex justify-center">
             {trip === null ? (
