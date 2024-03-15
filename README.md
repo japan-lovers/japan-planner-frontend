@@ -1,8 +1,17 @@
-# React + Vite
+# Nippon Adventure - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Description
 
-Currently, two official plugins are available:
+Nippon Adventure is a React-powered web-app that provides inspiration and planning tools to help you plan your next trip to Japan. This repository includes the code for the frontend, you can find the backend code [here](https://github.com/japan-lovers/japan-planner-backend).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<img src="./public/nipponadventure.jpg"/>
+
+## How it works
+
+Once you know the dates you'll be in Japan, you can create a trip adding both the dates and the destinations you'll be visiting. You can browse the selection of activities we have available and find ideas to add to your trip plan.
+
+In your trip page, you can give it a custom name and drag and drop activities to your calendar as you wish.
+
+# Demo
+
+Plan your next trip to Japan with [Nippon Adventure](https://nippon-adventure.netlify.app/)!
