@@ -184,7 +184,9 @@ function UserProfilePage() {
                   </textarea>
                 </form>
               ) : (
-                <div className="textarea w-11/12 h-20 my-4 mx-6">{intro}</div>
+                <div className="textarea w-11/12 h-30 sm:h-20 my-4 mx-6">
+                  {intro}
+                </div>
               )}
             </div>
 

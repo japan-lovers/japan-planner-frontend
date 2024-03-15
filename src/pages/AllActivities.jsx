@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
-import activitiesService from '../services/activities.service';
-import CardActivity from '../components/CardActivity';
+import { useState, useEffect, useContext } from "react";
+import activitiesService from "../services/activities.service";
+import CardActivity from "../components/CardActivity";
 
-import { AuthContext } from '../context/auth.context';
-import userService from '../services/user.service';
-import CreateActivity from '../components/CreateActivity';
-import Map from '../components/Map';
+import { AuthContext } from "../context/auth.context";
+import userService from "../services/user.service";
+import CreateActivity from "../components/CreateActivity";
+import Map from "../components/Map";
 
 function AllActivities() {
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -104,7 +104,7 @@ function AllActivities() {
                   <button
                     onClick={() => setByCategory(!byCategory)}
                     className={`btn btn-sm ${
-                      byCategory ? 'bg-black text-white' : 'btn-outline'
+                      byCategory ? "bg-black text-white" : "btn-outline"
                     } active btn-sm`}
                   >
                     Browse by category
@@ -137,8 +137,8 @@ function AllActivities() {
                           type="button"
                           className={`btn ${
                             filterByCategory.includes(cat)
-                              ? 'bg-black text-white'
-                              : 'btn-outline'
+                              ? "bg-black text-white"
+                              : "btn-outline"
                           } active btn-sm`}
                           onClick={() => filterByCat(cat)}
                           key={cat}
