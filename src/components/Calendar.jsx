@@ -96,9 +96,9 @@ export default function Calendar({ id }) {
 
   return (
     <div className="flex justify-center ">
-      <div className="flex flex-col">
+      <div className="flex flex-col ">
         <div className="flex">
-          <div className="flex flex-col basis-3/4">
+          <div className="flex flex-col ">
             <div className="flex w-10/12 justify-between">
               <div className="ml-2 flex flex-col ">
                 <h1 className="font-bold text-2xl">{name}</h1>

@@ -175,7 +175,7 @@ function UserProfilePage() {
               {editable ? (
                 <form ref={formRef} className="w-full">
                   <textarea
-                    className="textarea textarea-bordered w-11/12 my-4 mx-6"
+                    className="textarea textarea-bordered w-11/12 h-24 sm:h-18 my-4 mx-6"
                     type="text"
                     value={intro}
                     onChange={(e) => setIntro(e.target.value)}
@@ -201,7 +201,7 @@ function UserProfilePage() {
                       <Link key={trip._id} to={`/trips/${trip._id}`}>
                         <div className="h-16 w-full ring-gray-200 shadow-md rounded-md flex justify-between items-center my-4 p-4">
                           <h3 className="font-semibold text-md">{trip.name}</h3>
-                          <p>{trip.destinations[0]}</p>
+                          <p>{trip.destinations}</p>
                           <p>
                             From {new Date(trip.startDate).getDate()}/
                             {new Date(trip.startDate).getMonth() + 1}/
