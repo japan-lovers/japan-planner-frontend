@@ -1,11 +1,11 @@
-import { Card, CardBody, Typography } from '@material-tailwind/react';
+import { Card, CardBody, Typography } from "@material-tailwind/react";
 
 function DndDraggableCard({ name, id, isFav }) {
   return (
     <div className="h-12 w-full ring-gray-200 shadow-md rounded-md flex justify-between items-center  mr-2 p-4 overflow-hidden">
       <div className="mb-3 flex items-center justify-between ">
         <Typography
-          variant="p"
+          variant="paragraph"
           color="blue-gray"
           className="truncate font-medium text-gray-900 group-hover:text-indigo-600"
         >
