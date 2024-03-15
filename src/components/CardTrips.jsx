@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { CheckIcon } from "@heroicons/react/20/solid";
 
 function CardTrips({ tripData }) {
-  console.log(tripData);
-
   function datesDiff(date1, date2) {
     date1 = new Date(date1);
     date2 = new Date(date2);

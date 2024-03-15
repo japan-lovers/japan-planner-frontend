@@ -1,24 +1,11 @@
 import React, { useContext, useState } from "react";
-import {
-  DndContext,
-  DragOverlay,
-  closestCorners,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-
 import { useEffect } from "react";
 import { AuthContext } from "../context/auth.context";
 import tripsService from "../services/trip.service";
-
-import { useNavigate } from "react-router-dom";
 import NoneEditDayInCalendar from "./NoneEditDayInCalendar";
+import { Link } from "react-router-dom";
 
 export default function Calendar({ id }) {
-  const { isLoggedIn, user } = useContext(AuthContext);
   const [trip, setTrip] = useState(null);
   const [items, setItems] = useState({});
   const [itemsState, setItemsState] = useState(items);
@@ -30,6 +17,7 @@ export default function Calendar({ id }) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [destinations, setDestinations] = useState();
+  const [userCreator, setUserCreator] = useState(null);
 
   //   ---- CALL TO DATABASE --------------
 
@@ -60,6 +48,7 @@ export default function Calendar({ id }) {
         );
         setActivities(activities);
         setTrip(theTrip);
+        setUserCreator(response.data.userId);
       })
       .catch((error) => console.log(error));
   };
@@ -96,44 +85,49 @@ export default function Calendar({ id }) {
 
   return (
     <div className="flex justify-center ">
-      <div className="flex flex-col ">
-        <div className="flex">
-          <div className="flex flex-col ">
-            <div className="flex w-10/12 justify-between">
-              <div className="ml-2 flex flex-col ">
-                <h1 className="font-bold text-2xl">{name}</h1>
+      {trip === null ? (
+        <span className="loading loading-ring loading-lg mt-48"></span>
+      ) : (
+        <div className="mt-4 flex flex-col w-11/12 max-w-7xl">
+          <div className="ml-2 flex justify-between w-11/12">
+            <div className="ml-2 flex flex-col ">
+              <h1 className="font-bold text-2xl">{name}</h1>
 
-                <p className="mt-1 font-thin text-sm">
-                  {new Date(startDate).getDate()}/
-                  {new Date(startDate).getMonth() + 1}/
-                  {new Date(startDate).getFullYear()} to{" "}
-                  {new Date(endDate).getDate()}/
-                  {new Date(endDate).getMonth() + 1}/
-                  {new Date(endDate).getFullYear()}
-                  {/* {trip && datesDiff(trip.startDate, trip.endDate)} days of
-                  travel, I am going to {trip?.destinations.map((dest) => dest)} */}
-                </p>
+              <p className="mt-1 font-thin text-sm">
+                {new Date(startDate).getDate()}/
+                {new Date(startDate).getMonth() + 1}/
+                {new Date(startDate).getFullYear()} to{" "}
+                {new Date(endDate).getDate()}/{new Date(endDate).getMonth() + 1}
+                /{new Date(endDate).getFullYear()}
+                {/* {trip && datesDiff(trip.startDate, trip.endDate)} days of
+        travel, I am going to {trip?.destinations.map((dest) => dest)} */}
+              </p>
 
-                <p className="mt-1 font-thin text-sm">{destinations}</p>
-              </div>
+              <p className="mt-1 font-thin text-sm">{destinations}</p>
             </div>
-            <div className="flex flex-wrap basis-3/4">
-              {Object.keys(itemsState).map(
-                (key, index) =>
-                  key !== "favActivities" && (
-                    <NoneEditDayInCalendar
-                      id={key}
-                      items={items[key]}
-                      key={key}
-                      day={index + 1}
-                    />
-                  )
-              )}
-            </div>
+
+            <Link to={`/user/${userCreator._id}`}>
+              <button className="btn btn-xs text-md">
+                {userCreator.username}
+              </button>
+            </Link>
+          </div>
+
+          <div className="flex flex-wrap">
+            {Object.keys(itemsState).map(
+              (key, index) =>
+                key !== "favActivities" && (
+                  <NoneEditDayInCalendar
+                    id={key}
+                    items={items[key]}
+                    key={key}
+                    day={index + 1}
+                  />
+                )
+            )}
           </div>
         </div>
-        <div className="container p-10"></div>
-      </div>
+      )}
     </div>
   );
 }

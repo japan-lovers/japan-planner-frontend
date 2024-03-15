@@ -10,7 +10,6 @@ function AllTrips() {
       .getAllTrips()
       .then((response) => {
         setTrips(response.data);
-        console.log(response.data);
       })
       .catch((error) => console.log(error));
   };

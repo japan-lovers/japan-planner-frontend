@@ -24,7 +24,7 @@ function DayInCalendar(props) {
   }
 
   return (
-    <div className="ring-gray-200 shadow-md rounded-md h-72 w-full max-w-[15rem]    overflow-auto mt-4">
+    <div className="ring-gray-200 shadow-md rounded-md h-72 w-full max-w-[15rem] overflow-auto mt-4">
       <div className=" p-2 ">
         <Typography variant="h5" color="blue-gray">
           Day {day}
