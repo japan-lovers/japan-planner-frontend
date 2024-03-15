@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+
 import AppDndTest from '../components/dnd-comp/AppDndTest';
 
 function TripDetails() {

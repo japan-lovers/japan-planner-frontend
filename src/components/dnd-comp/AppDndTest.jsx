@@ -20,6 +20,7 @@ import DayInCalendar from './DayInCalendar';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
 import DeleteModal from './DeleteModal';
+import Calendar from '../Calendar';
 
 export default function AppDndTest({ id }) {
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -134,21 +135,6 @@ export default function AppDndTest({ id }) {
       .catch((error) => console.log(error));
   };
 
-  // console.log("favs", favs);
-  //  ----- Function to know how many days the trip is ---------------
-  // function datesDiff(date1, date2) {
-  //   date1 = new Date(date1);
-  //   date2 = new Date(date2);
-
-  //   const differenceInMillisecondes = Math.abs(date2 - date1);
-
-  //   const differenceInDays = Math.ceil(
-  //     differenceInMillisecondes / (1000 * 60 * 60 * 24)
-  //   );
-
-  //   return differenceInDays;
-  // }
-
   //  ----- Function to Display the days of my trip ---------------
   function displayDaysBetweenDates(date1, date2) {
     date1 = new Date(date1);
@@ -217,134 +203,144 @@ export default function AppDndTest({ id }) {
     })
   );
 
+  const isYours = (contentId, userId) => {
+    return contentId === userId;
+  };
+
   return (
-    <div className="flex flex-col">
-      <div className="flex">
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCorners}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDragEnd={handleDragEnd}
-        >
-          <div className="basis-1/4">
-            {' '}
-            {Object.keys(itemsState).map(
-              (key) =>
-                key === 'favActivities' && (
-                  <Sidebar
-                    id="favActivities"
-                    items={items.favActivities}
-                    key={key}
-                    favs={favs}
-                  />
-                )
-            )}
-          </div>
-          <div className="flex flex-col basis-3/4">
-            <div className="flex w-10/12 justify-between">
-              <div className="ml-2 flex flex-col ">
-                {editable ? (
-                  <input
-                    type="text"
-                    value={name}
-                    placeholder={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="input input-bordered input-sm font-bold text-2xl"
-                  />
-                ) : (
-                  <h1 className="font-bold text-2xl">{name}</h1>
+    <>
+      {isLoggedIn && isYours(trip?.userId, user._id) ? (
+        <div className="flex flex-col">
+          <div className="flex">
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCorners}
+              onDragStart={handleDragStart}
+              onDragOver={handleDragOver}
+              onDragEnd={handleDragEnd}
+            >
+              <div className="basis-1/4">
+                {' '}
+                {Object.keys(itemsState).map(
+                  (key) =>
+                    key === 'favActivities' && (
+                      <Sidebar
+                        id="favActivities"
+                        items={items.favActivities}
+                        key={key}
+                        favs={favs}
+                      />
+                    )
                 )}
-                {editable ? (
-                  <input
-                    type="text"
-                    name=""
-                    id=""
-                    className="input input-bordered input-xs"
-                  />
-                ) : (
-                  <p className="mt-1 font-thin text-sm">
-                    {new Date(startDate).getDate()}/
-                    {new Date(startDate).getMonth() + 1}/
-                    {new Date(startDate).getFullYear()} to{' '}
-                    {new Date(endDate).getDate()}/
-                    {new Date(endDate).getMonth() + 1}/
-                    {new Date(endDate).getFullYear()}
-                    {/* {trip && datesDiff(trip.startDate, trip.endDate)} days of
+              </div>
+              <div className="flex flex-col basis-3/4">
+                <div className="flex w-10/12 justify-between">
+                  <div className="ml-2 flex flex-col ">
+                    {editable ? (
+                      <input
+                        type="text"
+                        value={name}
+                        placeholder={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="input input-bordered input-sm font-bold text-2xl"
+                      />
+                    ) : (
+                      <h1 className="font-bold text-2xl">{name}</h1>
+                    )}
+                    {editable ? (
+                      <input
+                        type="text"
+                        name=""
+                        id=""
+                        className="input input-bordered input-xs"
+                      />
+                    ) : (
+                      <p className="mt-1 font-thin text-sm">
+                        {new Date(startDate).getDate()}/
+                        {new Date(startDate).getMonth() + 1}/
+                        {new Date(startDate).getFullYear()} to{' '}
+                        {new Date(endDate).getDate()}/
+                        {new Date(endDate).getMonth() + 1}/
+                        {new Date(endDate).getFullYear()}
+                        {/* {trip && datesDiff(trip.startDate, trip.endDate)} days of
                   travel, I am going to {trip?.destinations.map((dest) => dest)} */}
-                  </p>
-                )}
-                {editable ? (
-                  <input
-                    type="text"
-                    value={destionations}
-                    placeholder={destionations}
-                    onChange={(e) => setDestionations(e.target.value)}
-                    className="input input-bordered input-xs text-sm"
-                  />
-                ) : (
-                  <p className="mt-1 font-thin text-sm">
-                    {trip?.destinations.map((dest) => dest)}
-                  </p>
-                )}
+                      </p>
+                    )}
+                    {editable ? (
+                      <input
+                        type="text"
+                        value={destionations}
+                        placeholder={destionations}
+                        onChange={(e) => setDestionations(e.target.value)}
+                        className="input input-bordered input-xs text-sm"
+                      />
+                    ) : (
+                      <p className="mt-1 font-thin text-sm">
+                        {trip?.destinations.map((dest) => dest)}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    {editable ? (
+                      <button
+                        onClick={updateHandler}
+                        className="btn btn-outline btn-xs mx-2"
+                      >
+                        Update
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          if (!editable) {
+                            setEditable(!editable);
+                          }
+                        }}
+                        className="btn btn-outline btn-xs mx-2"
+                      >
+                        Edit
+                      </button>
+                    )}
+                    <button
+                      onClick={() => setOpen(true)}
+                      className="btn btn-outline btn-xs mx-2"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-wrap basis-3/4">
+                  {Object.keys(itemsState).map(
+                    (key, index) =>
+                      key !== 'favActivities' && (
+                        <DayInCalendar
+                          id={key}
+                          items={items[key]}
+                          key={key}
+                          favs={favs}
+                          day={index + 1}
+                        />
+                      )
+                  )}
+                </div>
               </div>
-              <div>
-                {editable ? (
-                  <button
-                    onClick={updateHandler}
-                    className="btn btn-outline btn-xs mx-2"
-                  >
-                    Update
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      if (!editable) {
-                        setEditable(!editable);
-                      }
-                    }}
-                    className="btn btn-outline btn-xs mx-2"
-                  >
-                    Edit
-                  </button>
-                )}
-                <button
-                  onClick={() => setOpen(true)}
-                  className="btn btn-outline btn-xs mx-2"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-            <div className="flex flex-wrap basis-3/4">
-              {Object.keys(itemsState).map(
-                (key, index) =>
-                  key !== 'favActivities' && (
-                    <DayInCalendar
-                      id={key}
-                      items={items[key]}
-                      key={key}
-                      favs={favs}
-                      day={index + 1}
-                    />
-                  )
-              )}
-            </div>
+              <DragOverlay>
+                {activeId ? (
+                  <DndDraggableCard id={activeId} name={activeData.name} />
+                ) : null}
+              </DragOverlay>
+            </DndContext>
           </div>
-          <DragOverlay>
-            {activeId ? (
-              <DndDraggableCard id={activeId} name={activeData.name} />
-            ) : null}
-          </DragOverlay>
-        </DndContext>
-      </div>
-      <div className="container p-10"></div>
-      <DeleteModal
-        open={open}
-        handleClose={() => setOpen(false)}
-        handleDelete={handleDelete}
-      />
-    </div>
+          <div className="container p-10"></div>
+          <DeleteModal
+            open={open}
+            handleClose={() => setOpen(false)}
+            handleDelete={handleDelete}
+          />
+        </div>
+      ) : (
+        <Calendar id={id} />
+      )}
+    </>
   );
 
   function findContainer(id) {
