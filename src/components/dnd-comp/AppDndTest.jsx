@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 import {
   DndContext,
   DragOverlay,
@@ -7,19 +7,19 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-} from "@dnd-kit/core";
-import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+} from '@dnd-kit/core';
+import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 
-import { useEffect } from "react";
-import { AuthContext } from "../../context/auth.context";
-import tripsService from "../../services/trip.service";
-import activitiesService from "../../services/activities.service";
-import userService from "../../services/user.service";
-import DndDraggableCard from "./DndDraggableCard";
-import DayInCalendar from "./DayInCalendar";
-import Sidebar from "./Sidebar";
-import { useNavigate } from "react-router-dom";
-import DeleteModal from "./DeleteModal";
+import { useEffect } from 'react';
+import { AuthContext } from '../../context/auth.context';
+import tripsService from '../../services/trip.service';
+import activitiesService from '../../services/activities.service';
+import userService from '../../services/user.service';
+import DndDraggableCard from './DndDraggableCard';
+import DayInCalendar from './DayInCalendar';
+import Sidebar from './Sidebar';
+import { useNavigate } from 'react-router-dom';
+import DeleteModal from './DeleteModal';
 
 export default function AppDndTest({ id }) {
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -78,7 +78,7 @@ export default function AppDndTest({ id }) {
     tripsService
       .updateTrip(id, requestBody)
       .then((response) => {
-        console.log("successful change of the for");
+        console.log('successful change of the for');
       })
       .catch((error) => console.log(error));
   };
@@ -106,7 +106,7 @@ export default function AppDndTest({ id }) {
   const handleDelete = () => {
     tripsService
       .deleteTrip(id)
-      .then(() => navigate("/trips"))
+      .then(() => navigate('/trips'))
       .catch((error) => console.log(error));
   };
   const updateHandler = (event) => {
@@ -174,7 +174,7 @@ export default function AppDndTest({ id }) {
   const createNewActivities = (activities, activeId, overContainer) => {
     const newActivities = [...activities];
     //CHECK IF WE MOVE IT IN THE SIDEBAR AND DELETE IT FROM ACTIVITIES
-    if (overContainer === "favActivities") {
+    if (overContainer === 'favActivities') {
       return newActivities.filter(
         (activity) => activity.activity._id !== activeId
       );
@@ -228,10 +228,10 @@ export default function AppDndTest({ id }) {
           onDragEnd={handleDragEnd}
         >
           <div className="basis-1/4">
-            {" "}
+            {' '}
             {Object.keys(itemsState).map(
               (key) =>
-                key === "favActivities" && (
+                key === 'favActivities' && (
                   <Sidebar
                     id="favActivities"
                     items={items.favActivities}
@@ -243,7 +243,7 @@ export default function AppDndTest({ id }) {
           </div>
           <div className="flex flex-col basis-3/4">
             <div className="flex w-10/12 justify-between">
-              <div className="ml-2 flex flex-col">
+              <div className="ml-2 flex flex-col ">
                 {editable ? (
                   <input
                     type="text"
@@ -266,7 +266,7 @@ export default function AppDndTest({ id }) {
                   <p className="mt-1 font-thin text-sm">
                     {new Date(startDate).getDate()}/
                     {new Date(startDate).getMonth() + 1}/
-                    {new Date(startDate).getFullYear()} to{" "}
+                    {new Date(startDate).getFullYear()} to{' '}
                     {new Date(endDate).getDate()}/
                     {new Date(endDate).getMonth() + 1}/
                     {new Date(endDate).getFullYear()}
@@ -318,13 +318,14 @@ export default function AppDndTest({ id }) {
             </div>
             <div className="flex flex-wrap basis-3/4">
               {Object.keys(itemsState).map(
-                (key) =>
-                  key !== "favActivities" && (
+                (key, index) =>
+                  key !== 'favActivities' && (
                     <DayInCalendar
                       id={key}
                       items={items[key]}
                       key={key}
                       favs={favs}
+                      day={index + 1}
                     />
                   )
               )}

@@ -1,11 +1,11 @@
-import { Card, Typography } from "@material-tailwind/react";
-import { useDroppable } from "@dnd-kit/core";
+import { Card, Typography } from '@material-tailwind/react';
+import { useDroppable } from '@dnd-kit/core';
 
 import {
   SortableContext,
   verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import DndCardActivity from "./DndCardActivity";
+} from '@dnd-kit/sortable';
+import DndCardActivity from './DndCardActivity';
 
 function Sidebar(props) {
   const { id, items, favs } = props;
