@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -7,15 +7,15 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-} from '@dnd-kit/core';
-import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+} from "@dnd-kit/core";
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
-import { useEffect } from 'react';
-import { AuthContext } from '../context/auth.context';
-import tripsService from '../services/trip.service';
+import { useEffect } from "react";
+import { AuthContext } from "../context/auth.context";
+import tripsService from "../services/trip.service";
 
-import { useNavigate } from 'react-router-dom';
-import NoneEditDayInCalendar from './NoneEditDayInCalendar';
+import { useNavigate } from "react-router-dom";
+import NoneEditDayInCalendar from "./NoneEditDayInCalendar";
 
 export default function Calendar({ id }) {
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -29,7 +29,7 @@ export default function Calendar({ id }) {
   const [name, setName] = useState();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const [destionations, setDestionations] = useState();
+  const [destinations, setDestinations] = useState();
 
   //   ---- CALL TO DATABASE --------------
 
@@ -46,7 +46,7 @@ export default function Calendar({ id }) {
         setName(response.data.name);
         setStartDate(response.data.startDate);
         setEndDate(response.data.endDate);
-        setDestionations(response.data.destinations);
+        setDestinations(response.data.destinations);
         const { activities, ...theTrip } = response.data;
         const dates = displayDaysBetweenDates(
           theTrip.startDate,
@@ -106,7 +106,7 @@ export default function Calendar({ id }) {
                 <p className="mt-1 font-thin text-sm">
                   {new Date(startDate).getDate()}/
                   {new Date(startDate).getMonth() + 1}/
-                  {new Date(startDate).getFullYear()} to{' '}
+                  {new Date(startDate).getFullYear()} to{" "}
                   {new Date(endDate).getDate()}/
                   {new Date(endDate).getMonth() + 1}/
                   {new Date(endDate).getFullYear()}
@@ -114,15 +114,13 @@ export default function Calendar({ id }) {
                   travel, I am going to {trip?.destinations.map((dest) => dest)} */}
                 </p>
 
-                <p className="mt-1 font-thin text-sm">
-                  {trip?.destinations.map((dest) => dest)}
-                </p>
+                <p className="mt-1 font-thin text-sm">{destinations}</p>
               </div>
             </div>
             <div className="flex flex-wrap basis-3/4">
               {Object.keys(itemsState).map(
                 (key, index) =>
-                  key !== 'favActivities' && (
+                  key !== "favActivities" && (
                     <NoneEditDayInCalendar
                       id={key}
                       items={items[key]}
