@@ -1,11 +1,11 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import userService from '../services/user.service';
-import tripsService from '../services/trip.service';
-import { AuthContext } from '../context/auth.context';
-import CardActivity from '../components/CardActivity';
+import { useContext, useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import userService from "../services/user.service";
+import tripsService from "../services/trip.service";
+import { AuthContext } from "../context/auth.context";
+import CardActivity from "../components/CardActivity";
 
 function UserProfilePage() {
   const { id } = useParams();
@@ -59,14 +59,14 @@ function UserProfilePage() {
     getFavourites();
 
     axios
-      .get('https://restcountries.com/v3.1/all?fields=name')
+      .get("https://restcountries.com/v3.1/all?fields=name")
       .then((response) => {
         const allNationalities = response.data.map((country) => {
           return country.name.common;
         });
 
         const sortedNationalities = allNationalities.sort();
-        sortedNationalities.unshift('Citizen of the world');
+        sortedNationalities.unshift("Citizen of the world");
         setNationalities(sortedNationalities);
       })
       .catch((error) => console.log(error));
@@ -163,7 +163,7 @@ function UserProfilePage() {
                       Edit
                     </button>
                   ) : (
-                    ''
+                    ""
                   )}
 
                   {isLoggedIn && user?._id === id ? (
@@ -174,7 +174,7 @@ function UserProfilePage() {
                       Logout
                     </button>
                   ) : (
-                    ''
+                    ""
                   )}
                 </div>
               </div>
@@ -199,7 +199,7 @@ function UserProfilePage() {
 
             <div className="w-full lg:w-2/4">
               <h1 className="font-bold text-2xl">
-                {isLoggedIn && user?._id === id ? 'My trips:' : 'Trips:'}
+                {isLoggedIn && user?._id === id ? "My trips:" : "Trips:"}
               </h1>
               {userTrips === null ? (
                 <span className="loading loading-ring loading-lg mt-20 ml-60"></span>
@@ -210,11 +210,11 @@ function UserProfilePage() {
                       <Link key={trip._id} to={`/trips/${trip._id}`}>
                         <div className="h-16 w-full ring-gray-200 shadow-md rounded-md flex justify-between items-center my-4 p-4">
                           <h3 className="font-semibold text-md">{trip.name}</h3>
-                          <p>{trip.destinations[0]}</p>
+                          <p>{trip.destinations}</p>
                           <p>
                             From {new Date(trip.startDate).getDate()}/
                             {new Date(trip.startDate).getMonth() + 1}/
-                            {new Date(trip.startDate).getFullYear()} to{' '}
+                            {new Date(trip.startDate).getFullYear()} to{" "}
                             {new Date(trip.endDate).getDate()}/
                             {new Date(trip.endDate).getMonth() + 1}/
                             {new Date(trip.endDate).getFullYear()}
