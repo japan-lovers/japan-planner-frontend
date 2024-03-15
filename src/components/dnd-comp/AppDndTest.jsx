@@ -290,8 +290,6 @@ export default function AppDndTest({ id }) {
                       <button
                         onClick={() => {
                           if (!editable) {
-                            setStartDate(null);
-                            setEndDate(null);
                             setEditable(!editable);
                           }
                         }}
