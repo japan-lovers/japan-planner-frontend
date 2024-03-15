@@ -107,6 +107,16 @@ export default function AppDndTest({ id }) {
       .catch((error) => console.log(error));
   };
 
+  const updateTripActivities = (newActiv) => {
+    const requestBody = { activities: newActiv };
+    tripsService
+      .updateTrip(id, requestBody)
+      .then((response) => {
+        console.log("successful change of the for");
+      })
+      .catch((error) => console.log(error));
+  };
+
   // console.log("favs", favs);
   //  ----- Function to know how many days the trip is ---------------
   // function datesDiff(date1, date2) {
@@ -210,11 +220,6 @@ export default function AppDndTest({ id }) {
       .catch((error) => console.log(error));
 
     setEditable(!editable);
-  };
-
-  const onDatesChange = ({ startDate, endDate }) => {
-    setStartDate(startDate);
-    setEndDate(endDate);
   };
 
   return (
