@@ -8,7 +8,7 @@ import {
 } from '@dnd-kit/sortable';
 
 function DayInCalendar(props) {
-  const { id, items, favs } = props;
+  const { id, items, favs, day } = props;
 
   const { setNodeRef } = useDroppable({
     id,
@@ -24,11 +24,14 @@ function DayInCalendar(props) {
   }
 
   return (
-    <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5  m-5">
-      <div className="mb-2 p-4">
+    <div className="h-[calc(40vh-2rem)] w-full max-w-[15rem]    overflow-auto mt-4">
+      <div className=" p-2 ">
         <Typography variant="h5" color="blue-gray">
-          {formatDate(id)}
+          Day {day}
         </Typography>
+      </div>
+      <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
+        <time datetime="2021-12-27">{formatDate(id).slice(0, 2)}</time>
       </div>
       {/* column activities Container  */}
 
@@ -37,7 +40,7 @@ function DayInCalendar(props) {
         items={items}
         strategy={verticalListSortingStrategy}
       >
-        <div ref={setNodeRef} className="flex flex-col gap-2">
+        <div ref={setNodeRef} className="flex flex-col gap-2 p-2 ">
           {items?.map((activity) => {
             return (
               <DndCardActivity
@@ -51,7 +54,7 @@ function DayInCalendar(props) {
           })}
         </div>
       </SortableContext>
-    </Card>
+    </div>
   );
 }
 
