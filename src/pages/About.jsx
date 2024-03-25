@@ -1,4 +1,5 @@
 import LaiaImg from "../../public/team-laia.jpg";
+import ThomasImg from "../../public/team-thomas.jpeg";
 
 function About() {
   return (
@@ -28,7 +29,7 @@ function About() {
           <div className="flex flex-col items-center my-4 md:my-0 md:w-5/12">
             <div className="avatar">
               <div className="w-32 rounded-full">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src={ThomasImg} />
               </div>
             </div>
             <h2 className="font-semibold text-1xl my-4">Thomas Deblay</h2>
