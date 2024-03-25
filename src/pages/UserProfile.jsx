@@ -70,7 +70,7 @@ function UserProfilePage() {
         setNationalities(sortedNationalities);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [id]);
 
   const changeEditable = () => {
     if (!editable) {
@@ -110,7 +110,7 @@ function UserProfilePage() {
   return (
     <div className="flex justify-center">
       {userDb === null ? (
-        <span className="loading loading-ring loading-lg mt-48"></span>
+        <span className="loading loading-ring loading-lg my-48"></span>
       ) : (
         <div className="flex flex-col w-full mx-6 max-w-7xl">
           <div className="mt-5 flex flex-col lg:flex-row justify-between">
