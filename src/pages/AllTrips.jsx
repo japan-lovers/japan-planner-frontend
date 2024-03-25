@@ -26,7 +26,7 @@ function AllTrips() {
         </h2>
         <div className="w-full flex flex-col items-center">
           {trips === null ? (
-            <span className="loading loading-ring loading-lg mt-48"></span>
+            <span className="loading loading-ring loading-lg my-48"></span>
           ) : trips.length === 0 ? (
             <div className="font-thin text-sm m-4">
               No trips have been created yet

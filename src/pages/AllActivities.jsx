@@ -87,7 +87,7 @@ function AllActivities() {
 
   return (
     <div className="flex justify-center">
-      <div className="max-w-7xl flex flex-col p-4">
+      <div className="max-w-7xl w-full flex flex-col p-4">
         <CreateActivity
           isOpen={isModalOpen}
           handleCloseModal={handleCloseModal}
@@ -156,7 +156,7 @@ function AllActivities() {
         {!mapView ? (
           <div className="flex justify-center flex-wrap gap-6 ">
             {activities === null ? (
-              <span className="loading loading-ring loading-lg mt-48"></span>
+              <span className="loading loading-ring loading-lg my-48"></span>
             ) : activities.length === 0 ? (
               <div className="font-thin text-sm m-4">
                 No activities available
