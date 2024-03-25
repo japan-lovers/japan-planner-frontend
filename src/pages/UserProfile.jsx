@@ -241,13 +241,13 @@ function UserProfilePage() {
                 You don't have any activities added to favourites
               </div>
             ) : (
-              <div className="flex flex-wrap justify-center">
+              <div className="flex flex-wrap justify-center flex-wrap gap-6 ">
                 {favouriteActivities.map((activity, index) => (
                   <CardActivity
                     activity={activity}
                     key={activity._id}
                     updateFavourites={updateFavourites}
-                    width="w-full sm:w-45 md:w-30 lg:w-22"
+                    width="w-full sm:w-45 md:w-30 lg:w-22 rounded-xl"
                   />
                 ))}
               </div>
