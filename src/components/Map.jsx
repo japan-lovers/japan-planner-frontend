@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   GoogleMap,
   useJsApiLoader,
   Marker,
   InfoWindow,
-} from '@react-google-maps/api';
-import { useCallback } from 'react';
-import CardActivity from './CardActivity';
+} from "@react-google-maps/api";
+import { useCallback } from "react";
+import CardActivity from "./CardActivity";
 import {
   Card,
   CardHeader,
@@ -16,12 +16,13 @@ import {
   Button,
   Tooltip,
   IconButton,
-} from '@material-tailwind/react';
-import { Link } from 'react-router-dom';
+} from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 const containerStyle = {
-  width: '1024px',
-  height: '500px',
+  width: "1180px",
+  height: "500px",
+  margin: "0px 40px 0px 40px",
 };
 
 // const center = {
@@ -31,7 +32,7 @@ const containerStyle = {
 
 function Map({ activities, zoomStart, center }) {
   const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
+    id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_API_KEY,
   });
   const [map, setMap] = useState(null);
@@ -43,7 +44,7 @@ function Map({ activities, zoomStart, center }) {
     },
   ]);
 
-  const [selectedMarker, setSelectedMarker] = useState('');
+  const [selectedMarker, setSelectedMarker] = useState("");
   const [zoom, setZoom] = useState(zoomStart);
 
   const onLoad = useCallback(function callback(map) {
