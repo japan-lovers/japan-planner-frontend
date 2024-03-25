@@ -20,7 +20,10 @@ function AllTrips() {
 
   return (
     <div className="flex justify-center">
-      <div className="w-full max-w-7xl flex flex-col items-start mb-6">
+      <div className="w-full max-w-7xl flex flex-col items-start mb-6 p-4">
+        <h2 className="text-2xl font-bold leading-7 ml-2 mb-2 text-gray-900 sm:truncate sm:tracking-tight">
+          Explore trips
+        </h2>
         {trips === null ? (
           <span className="loading loading-ring loading-lg mt-48"></span>
         ) : trips.length === 0 ? (

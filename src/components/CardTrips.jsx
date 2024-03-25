@@ -20,7 +20,7 @@ function CardTrips({ tripData }) {
     <div className="w-full">
       <Link to={`/trips/${tripData._id}`}>
         <div className="mx-auto max-w-7xl px-6 lg:px-8 ">
-          <div className="w-11/12 my-4 flex py-8 flex-col mx-auto max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none ">
+          <div className="w-full my-4 flex py-8 flex-col mx-auto max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none ">
             <div className="flex justify-between px-8 sm:px-10 lg:flex-auto">
               <div className="flex flex-col">
                 <h3 className="text-2xl font-bold tracking-tight text-gray-900">
