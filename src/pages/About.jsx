@@ -9,19 +9,36 @@ function About() {
           <h1 className="font-bold text-2xl mb-4">About this project:</h1>
           <p className="my-2">
             Nippon Adventure, a React-powered web-app with the back end built in
-            Express.js, is a trip planning tool created by and for Japan lovers
-            so that planning your next trip to the Land of the Rising Sun will
-            have never been so easy and fun.
+            Express.js, is a trip planning tool designed by Japan enthusiasts to
+            discovering the endless array of activities awaiting you in Japan.
+            Our platform simplifies trip planning and unveils hidden gems,
+            ensuring every day is filled with thrilling adventures tailored to
+            your preferences. Discover how we're revolutionizing Japan travel
+            for beginners to advanced Japan lovers.
           </p>
           <p className="my-2">
-            Now that the COVID-19 pandemic is over and Japan finally lifted
-            their travel restrictions, it has become the most desired
-            destination for travelers worldwide. But planning a trip to Japan by
-            yourself can be very daunting, especially if you don't speak the
-            language or you are not familiar with their culture. That's what
-            motivated us to create this website, so you can organise your plans
-            during the trip and get inspiration from other people's trips if you
-            don't know how to start planning yours.
+            Expore the{" "}
+            <a
+              href="https://github.com/japan-lovers/japan-planner-frontend"
+              className=" italic hover:underline"
+            >
+              Front end
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://github.com/japan-lovers/japan-planner-backend"
+              className=" italic hover:underline"
+            >
+              Back end
+            </a>{" "}
+            codebases of Nippon Adventure on{" "}
+            <a
+              href="https://github.com/japan-lovers"
+              className=" italic hover:underline"
+            >
+              Github
+            </a>
+            .
           </p>
           <h1 className="font-bold text-2xl mt-10 ">The team:</h1>
         </div>
