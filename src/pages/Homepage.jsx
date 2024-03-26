@@ -18,7 +18,7 @@ function Homepage() {
             <TripForm />
           </div>
         </div>
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-start w-full">
           <RandomActivities />
         </div>
       </div>

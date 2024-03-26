@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import activitiesService from "../services/activities.service";
 import CardActivity from "./CardActivity";
+import { Link } from "react-router-dom";
 
 function RandomActivities() {
   const [randomActivities, setRandomActivities] = useState(null);
@@ -31,9 +32,16 @@ function RandomActivities() {
 
   return (
     <div className="mt-20 w-full flex flex-col items-start">
-      <h2 className="mx-12 text-lg font-semibold leading-7 mb-2 text-gray-900 sm:truncate sm:tracking-tight">
-        Browse our activities
-      </h2>
+      <div className="flex justify-between w-full mx-12">
+        <h2 className="text-lg font-semibold leading-7 mb-2 text-gray-900 sm:truncate sm:tracking-tight">
+          Browse our activities
+        </h2>
+        <Link to="/activities">
+          <button className="btn btn-sm btn-ghost font-normal mx-24">
+            See all
+          </button>
+        </Link>
+      </div>
       <div className="flex justify-center flex-wrap gap-6 ">
         {randomActivities === null ? (
           <span className="loading loading-ring loading-lg mt-48"></span>
