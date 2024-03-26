@@ -6,6 +6,7 @@ import { AuthContext } from "../context/auth.context";
 import userService from "../services/user.service";
 import CreateActivity from "../components/CreateActivity";
 import Map from "../components/Map";
+import { Link } from "react-router-dom";
 
 function AllActivities() {
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -120,12 +121,20 @@ function AllActivities() {
                   <h3 className="w-32 md:w-48 text-right text-sm">
                     Don't see what you plan to do?
                   </h3>
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="btn btn-outline btn-sm mt-2 sm:mt-1"
-                  >
-                    Add your activity
-                  </button>
+                  {!isLoggedIn ? (
+                    <Link to="/login">
+                      <button className="btn btn-outline btn-sm mt-2 sm:mt-1">
+                        Add your activity
+                      </button>
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => setIsModalOpen(true)}
+                      className="btn btn-outline btn-sm mt-2 sm:mt-1"
+                    >
+                      Add your activity
+                    </button>
+                  )}
                 </div>
               </div>
               <div className="flex justify-center">
