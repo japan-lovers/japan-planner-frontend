@@ -1,9 +1,9 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import activitiesService from '../services/activities.service';
-import { useContext, useEffect, useState } from 'react';
-import EditActivity from '../components/EditActivity';
-import { AuthContext } from '../context/auth.context';
-import Map from '../components/Map';
+import { Link, useNavigate, useParams } from "react-router-dom";
+import activitiesService from "../services/activities.service";
+import { useContext, useEffect, useState } from "react";
+import EditActivity from "../components/EditActivity";
+import { AuthContext } from "../context/auth.context";
+import Map from "../components/Map";
 
 function ActivityDetails() {
   const { id } = useParams();
@@ -49,18 +49,18 @@ function ActivityDetails() {
   }, [position]);
 
   const month = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const handleCloseModal = () => {
@@ -82,7 +82,7 @@ function ActivityDetails() {
   return (
     <div className="flex  justify-center w-full">
       {activity === null ? (
-        <span className="loading loading-ring loading-lg mt-48"></span>
+        <span className="loading loading-ring loading-lg my-48"></span>
       ) : (
         <div className="max-w-7xl flex p-4 justify-center">
           <EditActivity
@@ -108,14 +108,14 @@ function ActivityDetails() {
                     strokeLinejoin="round"
                   ></g>
                   <g id="SVGRepo_iconCarrier">
-                    {' '}
+                    {" "}
                     <path
                       d="M14 7L9 12L14 17"
                       stroke="#000000"
                       strokeWidth="2.4"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                    ></path>{' '}
+                    ></path>{" "}
                   </g>
                 </svg>
                 {position !== 0 && (
@@ -150,14 +150,14 @@ function ActivityDetails() {
                     strokeLinejoin="round"
                   ></g>
                   <g id="SVGRepo_iconCarrier">
-                    {' '}
+                    {" "}
                     <path
                       d="M10 17L15 12L10 7"
                       stroke="#000000"
                       strokeWidth="2.4"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                    ></path>{' '}
+                    ></path>{" "}
                   </g>
                 </svg>
               </div>
@@ -209,14 +209,14 @@ function ActivityDetails() {
                       </div>
                     ) : oneDate ? (
                       <div className="my-2 font-light text-md">
-                        {month[new Date(activity.startDate).getMonth()]}{' '}
+                        {month[new Date(activity.startDate).getMonth()]}{" "}
                         {new Date(activity.startDate).getDate()}th
                       </div>
                     ) : (
                       <div className="my-2 font-light text-md">
-                        {month[new Date(activity.startDate).getMonth()]}{' '}
-                        {new Date(activity.startDate).getDate()}th to{' '}
-                        {month[new Date(activity.endDate).getMonth()]}{' '}
+                        {month[new Date(activity.startDate).getMonth()]}{" "}
+                        {new Date(activity.startDate).getDate()}th to{" "}
+                        {month[new Date(activity.endDate).getMonth()]}{" "}
                         {new Date(activity.endDate).getDate()}th
                       </div>
                     )}
@@ -248,7 +248,7 @@ function ActivityDetails() {
                 </div>
               </div>
             </div>
-            <div className="flex justify-center align-center mt-12">
+            <div className="hidden xl:block flex justify-center align-center my-12">
               {activity && (
                 <Map
                   activities={mapActivity}

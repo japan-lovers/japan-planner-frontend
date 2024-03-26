@@ -48,19 +48,19 @@ function TripForm() {
   };
 
   return (
-    <div className="p-1 flex justify-center w-11/12  rounded-lg lg:rounded-full bg-white shadow-lg">
+    <div className="p-1 flex justify-center w-11/12  rounded-3xl lg:rounded-full bg-white shadow-lg">
       <form
         onSubmit={handleCreateTrip}
-        className="flex justify-evenly items-center p-2 flex flex-col lg:flex-row"
+        className="flex justify-between items-center p-2 flex flex-col lg:flex-row"
       >
-        <div className="flex flex-col items-center md:flex-row  justify-between lg:justify-evenly lg:w-profile">
+        <div className="flex flex-col items-center lg:flex-row  justify-between lg:justify-evenly lg:w-profile">
           <input
             type="text"
             name="destinations"
             value={destinations}
             placeholder="Where are you going?"
             onChange={handleDestinations}
-            className="mr-3 mb-3 md:mb-0 lg:mr-0 input input-bordered w-64 max-w-xs text-lg"
+            className="mr-3 mb-3 lg:mb-0 lg:mr-0 input input-bordered w-64 max-w-xs text-lg"
           />
 
           <DateRangePicker
