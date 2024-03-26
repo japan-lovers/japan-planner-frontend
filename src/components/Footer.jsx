@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Logo from "../../public/favicon.ico";
 
 function Footer() {
   return (
@@ -16,7 +17,7 @@ function Footer() {
           </div>
           <div className="text-sm mt-2 flex flex-col items-end">
             <Link to="/about" className="btn btn-sm btn-ghost font-normal">
-              About
+              About <img className="h-5" src={Logo} />
             </Link>
             <a
               href="https://github.com/japan-lovers"

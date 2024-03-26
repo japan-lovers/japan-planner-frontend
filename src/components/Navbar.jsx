@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
+import Logo from "../../public/favicon.ico";
+import NipponLogo from "../../public/NipponAdventure.png";
 
 function Navbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
@@ -49,11 +51,7 @@ function Navbar() {
           </div>
           <NavLink to="/">
             <span className="btn btn-ghost text-l">
-              {/* <img
-              className="h-10"
-              src="https://firebasestorage.googleapis.com/v0/b/ironhack-projects-f2422.appspot.com/o/images%2Fironlegacy.png?alt=media&token=c90a12e9-ba9b-41fa-855f-58f25e4a8270"
-            /> */}
-              Nippon Adventure
+              <img className="h-6" src={NipponLogo} />
             </span>
           </NavLink>
           <div className="navbar-start hidden lg:flex">
