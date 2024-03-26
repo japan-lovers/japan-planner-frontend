@@ -50,7 +50,10 @@ function About() {
               </div>
             </div>
             <h2 className="font-semibold text-1xl my-4">Thomas Deblay</h2>
-            <p></p>
+            <p className="text-center">
+              I love anime and Japanese food and I would love to visit Japan one
+              day and use Nippon Adventure to plan my trip
+            </p>
             <div className="my-4">
               <a href="https://github.com/Thomas-Deblay">
                 <button className="btn btn-outline mx-1">Github</button>
