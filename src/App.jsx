@@ -29,7 +29,6 @@ function App() {
         <Route path="/activities/:id" element={<ActivityDetails />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/image" element={<ChangeImage />} />
       </Routes>
 
       <Footer />
